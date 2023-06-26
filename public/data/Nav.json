@@ -1,0 +1,88 @@
+{
+  "algorithms": [
+    {
+      "name": "Sorting",
+      "id": "sorting",
+      "algorithms": [
+        {
+          "id": "bubble-sort",
+          "name": "Bubble Sort"
+        },
+        {
+          "id": "insertion-sort",
+          "name": "Insertion Sort"
+        },
+        {
+          "id": "selection-sort",
+          "name": "Selection Sort"
+        },
+        {
+          "id": "merge-sort",
+          "name": "Merge Sort"
+        },
+        {
+          "id": "quick-sort",
+          "name": "Quick Sort"
+        },
+        {
+          "id": "heap-sort",
+          "name": "Heap Sort"
+        },
+        {
+          "id": "radix-sort",
+          "name": "Radix Sort"
+        }
+      ]
+    },
+    {
+      "name": "Searching",
+      "id": "searching",
+      "algorithms": [
+        {
+          "id": "linear-search",
+          "name": "Linear search"
+        },
+        {
+          "id": "binary-search",
+          "name": "Binary Search"
+        },
+        {
+          "id": "jump-search",
+          "name": "Jump Search"
+        }
+      ]
+    },
+    {
+      "name": "Path Finding",
+      "id": "path-finding",
+      "algorithms": [
+        {
+          "id": "depth-first-search",
+          "name": "Depth First Search"
+        },
+        {
+          "id": "breadth-first-search",
+          "name": "Breadth First Search"
+        },
+        {
+          "id": "dijkstra",
+          "name": "Dijkstra"
+        },
+        {
+          "id": "a-star",
+          "name": "A-Star"
+        }
+      ]
+    },
+    {
+      "name": "Others",
+      "id": "others",
+      "algorithms": [
+        {
+          "id": "tower-of-hanoi",
+          "name": "Tower of Hanoi"
+        }
+      ]
+    }
+  ]
+}
