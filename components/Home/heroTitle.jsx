@@ -8,7 +8,7 @@ export default function HeroTitle() {
           id="algoviz-version"
           className="algoviz-version text-text-2 font-space text-[1rem] transition-all ease-in-out text-center"
         >
-          v2.0
+          v2.1.0
         </div>
         <div className="font-unica text-text-1 text-[5rem] md:text-[7.5rem] leading-[3.5rem]">
           <Link href="/">

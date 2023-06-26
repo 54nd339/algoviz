@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { NextSeo } from "next-seo";
-
+import Footer from "@/components/Footer";
 import TopBar from "@/components/TopBar";
 import Terrain from "@/components/Home/Terrain";
 import HeroTitle from "@/components/Home/heroTitle";
@@ -53,7 +53,7 @@ export default function Home() {
         }}
       />
       <div className="p-gap">
-        <div className="relative w-[100%] h-[70vh] border-[1px] border-border-1 overflow-hidden">
+        <div className="relative w-[100%] h-[80vh] border-[1px] border-border-1 overflow-hidden">
           <TopBar />
           <div
             id="visualizer-container"
@@ -63,6 +63,7 @@ export default function Home() {
             <Terrain className="absolute top-[-100%] z-10" />
           </div>
         </div>
+        <Footer />
       </div>
     </div>
   );
