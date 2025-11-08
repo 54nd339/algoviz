@@ -1,115 +1,163 @@
 import { store } from "@/redux/store";
 import { setGrid } from "@/redux/reducers/pathSlice";
+import generateGrid from "./generateGrid";
 
-function validate(grid, points) {
-  let height = grid.length, width = grid[0].length;
-  let pRe = [];
-  for (let index = 0; index < points.length; index++) {
-    let { row, col } = points[index];
-    if ((0 <= row && row < height && 0 <= col && col < width)) {
-      pRe.push(points[index]);
-    }
-  }
-  return pRe;
+function cloneAndResetGrid(grid) {
+  return grid.map((row) =>
+    row.map((node) => ({
+      ...node,
+      isWall: true,
+      isVisited: false,
+      distance: Infinity,
+      heuristic: Infinity,
+      previousNode: null,
+    }))
+  );
 }
-function isVisited(visited, node) {
-  let { row: nr, col: nc } = node;
-  for (let index = 0; index < visited.length; index++) {
-    let { row: ir, col: ic } = visited[index];
-    if (nr === ir && nc === ic) {
-      return true;
-    }
+
+function randomOdd(limit) {
+  const candidates = [];
+  for (let i = 1; i < limit - 1; i += 2) {
+    candidates.push(i);
   }
-  return false;
+  if (candidates.length === 0) {
+    return 0;
+  }
+  const index = Math.floor(Math.random() * candidates.length);
+  return candidates[index];
 }
-function getNeighbors(grid, visited, node) {
-  let { row, col } = node;
-  let neighbors = [
-    { row: row + 2, col: col },
-    { row: row - 2, col: col },
-    { row: row, col: col + 2 },
-    { row: row, col: col - 2 }
+
+function getUnvisitedNeighbors(row, col, visited, height, width) {
+  const deltas = [
+    [2, 0],
+    [-2, 0],
+    [0, 2],
+    [0, -2],
   ];
-  neighbors = validate(grid, neighbors.slice());
-  let connected = [];
-  let unconnected = [];
-  neighbors.forEach(neighbor => {
-    if (isVisited(visited, neighbor)) {
-      connected.push(neighbor);
-    } else {
-      unconnected.push(neighbor);
-    }
-  });
-  return { c: connected, u: unconnected };
+  const neighbors = [];
+
+  for (const [dr, dc] of deltas) {
+    const newRow = row + dr;
+    const newCol = col + dc;
+
+    if (newRow <= 0 || newRow >= height - 1) continue;
+    if (newCol <= 0 || newCol >= width - 1) continue;
+    if (visited[newRow][newCol]) continue;
+
+    neighbors.push({ row: newRow, col: newCol });
+  }
+
+  return neighbors;
 }
 
-function makeWall(grid, row, col, isW) {
-  const newGrid = grid.map((nodes) => {
-    return nodes.map((node) => {
-      if (node.row === row && node.col === col) {
-        return { ...node, isWall: isW };
+function ensureNodeAccessible(grid, node) {
+  if (!node) return;
+  const { x, y } = node;
+  if (!grid[x] || !grid[x][y]) return;
+
+  const height = grid.length;
+  const width = grid[0]?.length ?? 0;
+  const directions = [
+    [1, 0],
+    [-1, 0],
+    [0, 1],
+    [0, -1],
+  ];
+
+  grid[x][y].isWall = false;
+
+  const hasOpenNeighbor = directions.some(([dx, dy]) => {
+    const nx = x + dx;
+    const ny = y + dy;
+    return (
+      nx >= 0 && nx < height &&
+      ny >= 0 && ny < width &&
+      !grid[nx][ny].isWall
+    );
+  });
+
+  if (!hasOpenNeighbor) {
+    for (const [dx, dy] of directions) {
+      const nx = x + dx;
+      const ny = y + dy;
+      if (nx >= 0 && nx < height && ny >= 0 && ny < width) {
+        grid[nx][ny].isWall = false;
+        break;
       }
-      return node;
-    });
-  })
-  store.dispatch(setGrid(newGrid));
+    }
+  }
 }
-function connect(grid, a, b) {
-  let { row: ar, col: ac } = a;
-  let { row: br, col: bc } = b;
-  let row = (ar + br) / 2;
-  let col = (ac + bc) / 2;
-  makeWall(grid, row, col, false);
-}
-function randomInt(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-function randomSelect(path) {
-  return randomInt(0, path.length - 1);
+
+function ensureStartFinishClear(grid, startNode, finishNode) {
+  ensureNodeAccessible(grid, startNode);
+  ensureNodeAccessible(grid, finishNode);
 }
 
 function generateMaze() {
-  let grid = store.getState().path.grid;
-  let height = grid.length, width = grid[0].length;
-  let sr = Math.floor(Math.random() * height);
-  let sc = Math.floor(Math.random() * width);
+  generateGrid(true);
 
-  for (let i = 0; i < height; i++) {
-    for (let j = 0; j < width; j++) {
-      makeWall(grid, i, j, false);
-      grid = store.getState().path.grid;
+  const state = store.getState().path;
+  const { grid, startNode, finishNode } = state;
+
+  if (!grid.length || !grid[0]?.length) {
+    return;
+  }
+
+  const newGrid = cloneAndResetGrid(grid);
+  const height = newGrid.length;
+  const width = newGrid[0].length;
+
+  if (height < 3 || width < 3) {
+    for (const row of newGrid) {
+      for (const node of row) {
+        node.isWall = false;
+      }
     }
+    ensureStartFinishClear(newGrid, startNode, finishNode);
+    store.dispatch(setGrid(newGrid));
+    return;
   }
 
-  for (let i = 0; i < height; i++) {
-    for (let j = i % 2 + 1; j < width; j += i % 2 + 1) {
-      makeWall(grid, i, j, true);
-      grid = store.getState().path.grid;
+  const visited = Array.from({ length: height }, () =>
+    Array(width).fill(false)
+  );
+
+  const startRow = randomOdd(height);
+  const startCol = randomOdd(width);
+
+  visited[startRow][startCol] = true;
+  newGrid[startRow][startCol].isWall = false;
+
+  const stack = [{ row: startRow, col: startCol }];
+
+  while (stack.length) {
+    const current = stack[stack.length - 1];
+    const neighbors = getUnvisitedNeighbors(
+      current.row,
+      current.col,
+      visited,
+      height,
+      width
+    );
+
+    if (!neighbors.length) {
+      stack.pop();
+      continue;
     }
-  }
-  for (let i = 0; i < height; i++) {
-    makeWall(grid, i, 0, true);
-    grid = store.getState().path.grid;
+
+    const next = neighbors[Math.floor(Math.random() * neighbors.length)];
+    const betweenRow = current.row + (next.row - current.row) / 2;
+    const betweenCol = current.col + (next.col - current.col) / 2;
+
+    visited[next.row][next.col] = true;
+    newGrid[next.row][next.col].isWall = false;
+    newGrid[betweenRow][betweenCol].isWall = false;
+
+    stack.push({ row: next.row, col: next.col });
   }
 
-  let visited = [];
-  let path = [{ row: sr, col: sc }];
-  while (path.length > 0) {
-    const index = randomSelect(path);
-    const node = path[index];
-    path.splice(index, 1);
-    visited = visited.concat([node]);
-    const { c: connected, u: unconnected } = getNeighbors(grid, visited, node);
-    if (connected.length > 0) {
-      let rn = randomSelect(connected);
-      connect(grid, node, connected[rn]);
-      grid = store.getState().path.grid;
-      connected.splice(rn, 1);
-    }
-    path = path.concat(unconnected);
-  }
-
-  // Create a random path from start to finish without walls
+  ensureStartFinishClear(newGrid, startNode, finishNode);
+  store.dispatch(setGrid(newGrid));
 }
 
 export default generateMaze;

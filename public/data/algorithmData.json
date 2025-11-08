@@ -245,5 +245,21 @@
       "average": "O(b^d)",
       "worst": "O(b^d)"
     }
+  },
+  "Minimax": {
+    "title": "Minimax with Alpha-Beta Pruning",
+    "metaTitle": "Minimax with Alpha-Beta Pruning | Algoviz",
+    "description": "Minimax is a game tree search algorithm that chooses the optimal move by assuming an optimal adversary, while alpha-beta pruning eliminates branches that cannot influence the final decision.",
+    "code": "int minimax(Node node, int depth, int alpha, int beta, bool maximizingPlayer){\n\tif (depth == 0 || node.isTerminal())\n\t\treturn node.evaluate();\n\tif (maximizingPlayer){\n\t\tint bestValue = NEG_INF;\n\t\tfor (Node child : node.children()){\n\t\t\tint value = minimax(child, depth - 1, alpha, beta, false);\n\t\t\tbestValue = max(bestValue, value);\n\t\t\talpha = max(alpha, value);\n\t\t\tif (beta <= alpha) break; // beta cut-off\n\t\t}\n\t\treturn bestValue;\n\t}else{\n\t\tint bestValue = POS_INF;\n\t\tfor (Node child : node.children()){\n\t\t\tint value = minimax(child, depth - 1, alpha, beta, true);\n\t\t\tbestValue = min(bestValue, value);\n\t\t\tbeta = min(beta, value);\n\t\t\tif (beta <= alpha) break; // alpha cut-off\n\t\t}\n\t\treturn bestValue;\n\t}\n}",
+    "timeComplexity": {
+      "best": "O(b^{d/2})",
+      "average": "O(b^d)",
+      "worst": "O(b^d)"
+    },
+    "spaceComplexity": {
+      "best": "O(bd)",
+      "average": "O(bd)",
+      "worst": "O(bd)"
+    }
   }
 }

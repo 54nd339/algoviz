@@ -19,7 +19,7 @@ AlgoViz is a web app for visualizing various algorithms. It is built using Next.
 
 1. Clone the repository
 ```bash
-git clone https://github.com/54nd339/Social.git
+git clone https://github.com/54nd339/algoviz.git
 ```
 2. Install the dependencies
 ```bash

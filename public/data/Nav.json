@@ -81,6 +81,10 @@
         {
           "id": "tower-of-hanoi",
           "name": "Tower of Hanoi"
+        },
+        {
+          "id": "minimax",
+          "name": "Minimax (Alpha-Beta)"
         }
       ]
     }

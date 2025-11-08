@@ -99,11 +99,11 @@ export const handleMouseEnter = (row, col) => {
     const finish = document.getElementById(`node-${finishNode.x}-${finishNode.y}`);
     if (finish) {
       finish.className = 'node';
-      finish.isFinish = false;
+      finish.isEnd = false;
       const newGrid = grid.map((nodes) => {
         return nodes.map((node) => {
           if (node.row === finishNode.x && node.col === finishNode.y) {
-            return { ...node, isFinish: false };
+            return { ...node, isEnd: false };
           }
           return node;
         });
@@ -113,11 +113,11 @@ export const handleMouseEnter = (row, col) => {
     const newFinish = document.getElementById(`node-${row}-${col}`);
     if (newFinish) {
       newFinish.className = 'node node-finish';
-      newFinish.isFinish = true;
+      newFinish.isEnd = true;
       const newGrid = grid.map((nodes) => {
         return nodes.map((node) => {
           if (node.row === row && node.col === col) {
-            return { ...node, isFinish: true };
+            return { ...node, isEnd: true };
           }
           return node;
         });
