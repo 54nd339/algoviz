@@ -139,6 +139,10 @@
         {
           "id": "perceptron",
           "name": "Perceptron"
+        },
+        {
+          "id": "sudoku",
+          "name": "Sudoku Solver"
         }
       ]
     }

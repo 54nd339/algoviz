@@ -8,6 +8,7 @@ import pathSlice from "./reducers/pathSlice";
 import minimaxSlice from "./reducers/minimaxSlice";
 import aiSlice from "./reducers/aiSlice";
 import perceptronSlice from "./reducers/perceptronSlice";
+import sudokuSlice from "./reducers/sudokuSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +21,6 @@ export const store = configureStore({
     minimax: minimaxSlice,
     ai: aiSlice,
     perceptron: perceptronSlice,
+    sudoku: sudokuSlice,
   },
 });
