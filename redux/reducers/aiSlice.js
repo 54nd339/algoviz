@@ -9,6 +9,9 @@ const initialState = {
   slope: 0,
   intercept: 0,
   
+  // KNN parameters
+  k: 3, // Number of neighbors for KNN
+  
   // Training parameters
   running: false,
   learningRate: 0.01,
@@ -44,6 +47,9 @@ export const aiSlice = createSlice({
     },
     setIntercept: (state, action) => {
       state.intercept = action.payload;
+    },
+    setK: (state, action) => {
+      state.k = action.payload;
     },
     setRunning: (state, action) => {
       state.running = action.payload;
@@ -86,6 +92,16 @@ export const aiSlice = createSlice({
     incrementIterations: (state) => {
       state.iterations++;
     },
+    addPoint: (state, action) => {
+      const newPoint = {
+        x: action.payload.x,
+        y: action.payload.y,
+        class: -1, // Unclassified
+        trueClass: -2, // User-added point marker
+      };
+      state.dataPoints.push(newPoint);
+      state.pointCount = state.dataPoints.length;
+    },
   },
 });
 
@@ -93,6 +109,7 @@ export const {
   setDataPoints,
   setSlope,
   setIntercept,
+  setK,
   setRunning,
   setLearningRate,
   setIterations,
@@ -105,6 +122,7 @@ export const {
   setSpeed,
   resetStats,
   incrementIterations,
+  addPoint,
 } = aiSlice.actions;
 
 export default aiSlice.reducer;

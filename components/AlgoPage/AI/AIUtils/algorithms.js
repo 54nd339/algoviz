@@ -109,15 +109,128 @@ export const calculateLinearRegressionStep = () => {
 };
 
 /**
- * KNN PLACEHOLDER
+ * KNN ALGORITHM
  */
-export const calculateKNNStep = () => {
-  // KNN implementation will go here
-};
 
 export const generateKNNData = (count) => {
-  // KNN data generation will go here
-  return [];
+  const state = store.getState().ai;
+  const k = state.k || 2; // Get number of groups from Redux, default to 2
+  const points = [];
+  const pointsPerGroup = Math.floor(count / k);
+  
+  // Generate K clusters arranged in a circle
+  for (let groupIdx = 0; groupIdx < k; groupIdx++) {
+    const angle = (groupIdx / k) * 2 * Math.PI;
+    const centerX = 5 * Math.cos(angle);
+    const centerY = 5 * Math.sin(angle);
+    
+    // Generate points for this group
+    for (let i = 0; i < pointsPerGroup; i++) {
+      const pointAngle = Math.random() * 2 * Math.PI;
+      const radius = Math.random() * 1.5;
+      points.push({
+        x: centerX + radius * Math.cos(pointAngle),
+        y: centerY + radius * Math.sin(pointAngle),
+        class: -1, // All unclassified initially
+        trueClass: groupIdx, // Store true group/class for later
+      });
+    }
+  }
+  
+  // Add remaining points if count is not evenly divisible by k
+  const remaining = count - (pointsPerGroup * k);
+  for (let i = 0; i < remaining; i++) {
+    const groupIdx = i % k;
+    const angle = (groupIdx / k) * 2 * Math.PI;
+    const centerX = 5 * Math.cos(angle);
+    const centerY = 5 * Math.sin(angle);
+    const pointAngle = Math.random() * 2 * Math.PI;
+    const radius = Math.random() * 1.5;
+    points.push({
+      x: centerX + radius * Math.cos(pointAngle),
+      y: centerY + radius * Math.sin(pointAngle),
+      class: -1,
+      trueClass: groupIdx,
+    });
+  }
+  
+  return points;
+};
+
+export const calculateKNNStep = () => {
+  const state = store.getState().ai;
+  const dataPoints = state.dataPoints;
+  const k = state.k; // Use K value from Redux
+  
+  if (dataPoints.length === 0) return;
+  
+  // Find unclassified points (class === -1)
+  const unclassifiedIndices = dataPoints
+    .map((point, idx) => point.class === -1 ? idx : -1)
+    .filter(idx => idx !== -1);
+  
+  // Classify one point per step
+  if (unclassifiedIndices.length > 0) {
+    const pointIdx = unclassifiedIndices[0];
+    const point = dataPoints[pointIdx];
+    
+    // Calculate distances to all other points using their trueClass as the training data
+    // Skip points with trueClass === -2 (user-added points without known class)
+    const distances = dataPoints
+      .map((other, idx) => ({
+        distance: Math.sqrt((point.x - other.x) ** 2 + (point.y - other.y) ** 2),
+        trueClass: other.trueClass,
+        index: idx,
+      }))
+      .filter(d => d.index !== pointIdx && d.trueClass !== -2) // Exclude self and user-added without class
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, k);
+    
+    // If no valid neighbors found, skip this point
+    if (distances.length === 0) {
+      store.dispatch(require("@/redux/reducers/aiSlice").incrementIterations());
+      return;
+    }
+    
+    // Majority vote among k nearest neighbors using trueClass
+    const votes = distances.reduce((acc, d) => {
+      acc[d.trueClass] = (acc[d.trueClass] || 0) + 1;
+      return acc;
+    }, {});
+    
+    const predictedClass = Object.keys(votes).length > 0 
+      ? Object.keys(votes).reduce((a, b) => votes[a] > votes[b] ? a : b)
+      : 0;
+    
+    // Create new array with updated point (immutable)
+    const updatedDataPoints = dataPoints.map((p, idx) => 
+      idx === pointIdx 
+        ? { ...p, class: parseInt(predictedClass) }
+        : p
+    );
+    
+    // Dispatch updated points
+    store.dispatch(require("@/redux/reducers/aiSlice").setDataPoints(updatedDataPoints));
+  }
+  
+  // Calculate accuracy based on current predictions
+  let correctPredictions = 0;
+  let classifiedCount = 0;
+  dataPoints.forEach((point) => {
+    if (point.class !== -1 && point.trueClass !== -2) { // Only count original and generated points
+      classifiedCount++;
+      if (point.class === point.trueClass) {
+        correctPredictions++;
+      }
+    }
+  });
+  
+  const accuracy = classifiedCount > 0 ? (correctPredictions / classifiedCount) * 100 : 0;
+  
+  // Update Redux with KNN metrics
+  store.dispatch(require("@/redux/reducers/aiSlice").setRSquared(accuracy / 100));
+  store.dispatch(require("@/redux/reducers/aiSlice").setMSE(100 - accuracy));
+  store.dispatch(require("@/redux/reducers/aiSlice").setSlope(k));
 };
 
 /**

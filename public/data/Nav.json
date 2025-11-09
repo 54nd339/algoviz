@@ -107,6 +107,20 @@
       ]
     },
     {
+      "name": "AI",
+      "id": "ai",
+      "algorithms": [
+        {
+          "id": "linear-regression",
+          "name": "Linear Regression"
+        },
+        {
+          "id": "knn",
+          "name": "K-Nearest Neighbors"
+        }
+      ]
+    },
+    {
       "name": "Others",
       "id": "others",
       "algorithms": [
@@ -117,16 +131,6 @@
         {
           "id": "minimax",
           "name": "Minimax (Alpha-Beta)"
-        }
-      ]
-    },
-    {
-      "name": "AI",
-      "id": "ai",
-      "algorithms": [
-        {
-          "id": "linear-regression",
-          "name": "Linear Regression"
         }
       ]
     }

@@ -31,11 +31,7 @@ export default function MetricsData() {
       </div>
     );
   } else if (algoId === "knn") {
-    return (
-      <div className="flex flex-col font-space p-gap justify-between border-b-[10px] border-b-purple-bg">
-        <div className="text-green uppercase">KNN Metrics - Coming Soon</div>
-      </div>
-    );
+    return null; // No metrics for KNN
   } else if (algoId === "k-means") {
     return (
       <div className="flex flex-col font-space p-gap justify-between border-b-[10px] border-b-purple-bg">

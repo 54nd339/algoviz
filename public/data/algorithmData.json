@@ -341,5 +341,21 @@
       "average": "O(1)",
       "worst": "O(1)"
     }
+  },
+  "KNN": {
+    "title": "K-Nearest Neighbors",
+    "metaTitle": "K-Nearest Neighbors | Algoviz",
+    "description": "K-Nearest Neighbors (KNN) is a simple, non-parametric supervised learning algorithm used for classification and regression. It classifies a data point based on the majority class of its k nearest neighbors, making predictions by finding the most common label among the k closest training examples.",
+    "code": "int classifyPoint(vector<pair<double, double>>& data, vector<int>& classes,\n\t\t\t\t  pair<double, double> point, int k) {\n\tvector<pair<double, int>> distances;\n\t\n\tfor (int i = 0; i < data.size(); i++) {\n\t\tdouble dx = point.first - data[i].first;\n\t\tdouble dy = point.second - data[i].second;\n\t\tdouble dist = sqrt(dx*dx + dy*dy);\n\t\tdistances.push_back({dist, classes[i]});\n\t}\n\t\n\tsort(distances.begin(), distances.end());\n\t\n\tint count_class0 = 0, count_class1 = 0;\n\tfor (int i = 0; i < k && i < distances.size(); i++) {\n\t\tif (distances[i].second == 0) count_class0++;\n\t\telse count_class1++;\n\t}\n\t\n\treturn count_class0 > count_class1 ? 0 : 1;\n}",
+    "timeComplexity": {
+      "best": "O(n*d)",
+      "average": "O(n*d*log k)",
+      "worst": "O(n*d*log k)"
+    },
+    "spaceComplexity": {
+      "best": "O(n*d)",
+      "average": "O(n*d)",
+      "worst": "O(n*d)"
+    }
   }
 }

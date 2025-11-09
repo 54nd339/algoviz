@@ -7,8 +7,13 @@ import Data from "@/public/data/algorithmData.json";
 
 export default function AlgoData() {
   let algoName = useSelector((state) => state.page.algoName);
+  let algoId = useSelector((state) => state.page.algoId);
   if (algoName) {
+    // Handle special cases where JSON key differs from algoName
     let currAlgo = algoName.replace(" ", "");
+    if (algoId === "knn") {
+      currAlgo = "KNN";
+    }
     let currAlgoData = Data[currAlgo];
     if (currAlgoData) {
       return (<>

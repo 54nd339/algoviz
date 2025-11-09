@@ -25,21 +25,20 @@ export default function AI() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    batch(() => {
-      dispatch(setRunning(false));
-      dispatch(resetStats());
-      // Generate initial data points
-      const initialData = generateDataPoints(50);
-      dispatch(setDataPoints(initialData));
-    });
     var rawAlgoId = router.query.algoid;
     var algoName = ToProperCase(rawAlgoId);
 
     if (algoName != undefined) {
       batch(() => {
+        // Set algorithm ID first so generateDataPoints knows which algorithm to use
         dispatch(setAlgoId(rawAlgoId));
         dispatch(setAlgoName(algoName));
         dispatch(setAlgoCategory("ai"));
+        dispatch(setRunning(false));
+        dispatch(resetStats());
+        // Generate initial data points - now algoId is set in Redux
+        const initialData = generateDataPoints(50);
+        dispatch(setDataPoints(initialData));
       });
     }
   }, [router.query.algoid, dispatch]);
