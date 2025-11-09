@@ -6,6 +6,7 @@ import pageSlice from "./reducers/pageSlice";
 import hanoiSlice from "./reducers/hanoiSlice";
 import pathSlice from "./reducers/pathSlice";
 import minimaxSlice from "./reducers/minimaxSlice";
+import aiSlice from "./reducers/aiSlice";
 export const store = configureStore({
   reducer: {
     sorting: sortingSlice,
@@ -15,5 +16,6 @@ export const store = configureStore({
     hanoi: hanoiSlice,
     path: pathSlice,
     minimax: minimaxSlice,
+    ai: aiSlice,
   },
 });

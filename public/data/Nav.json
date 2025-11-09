@@ -119,6 +119,16 @@
           "name": "Minimax (Alpha-Beta)"
         }
       ]
+    },
+    {
+      "name": "AI",
+      "id": "ai",
+      "algorithms": [
+        {
+          "id": "linear-regression",
+          "name": "Linear Regression"
+        }
+      ]
     }
   ]
 }

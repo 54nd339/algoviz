@@ -13,7 +13,15 @@ AlgoViz is a web app for visualizing various algorithms. It is built using Next.
 - Sorting Visualizer
 - Searching Visualizer
 - Pathfinding Visualizer
+- Minimum Spanning Tree Visualizer
+- Shortest Path Visualizer
 - Tower of Hanoi Visualizer
+- Minimax Algorithm Visualizer
+- **AI & Machine Learning Visualizers** ✨ NEW!
+  - Linear Regression (with interactive gradient descent)
+  - K-Nearest Neighbor (coming soon)
+  - K-Means Clustering (coming soon)
+  - Perceptron/Neural Networks (coming soon)
 
 ## Installation
 
@@ -40,6 +48,6 @@ npm run start
 
 ## To-do
 
-- [ ] AI Algo for Reinforcement Learning
-- [ ] Perceptron
-- [ ] Min-Max Visualizer
+- [ ] K-Nearest Neighbor (AI)
+- [ ] K-Means Clustering (AI)
+- [ ] Perceptron (AI)

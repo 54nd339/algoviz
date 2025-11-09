@@ -325,5 +325,21 @@
       "average": "O(bd)",
       "worst": "O(bd)"
     }
+  },
+  "LinearRegression": {
+    "title": "Linear Regression",
+    "metaTitle": "Linear Regression | Algoviz",
+    "description": "Linear Regression is a fundamental machine learning algorithm that models the relationship between input features and a continuous output by fitting a linear equation to observed data. It minimizes the sum of squared errors between predicted and actual values.",
+    "code": "void linearRegression(vector<pair<double, double>>& data, double& m,\n\t\t\t\t\t\t  double& b, double learningRate, int iterations) {\n\tint n = data.size();\n\tdouble m_gradient = 0, b_gradient = 0;\n\t\n\tfor (int iter = 0; iter < iterations; iter++) {\n\t\tm_gradient = 0;\n\t\tb_gradient = 0;\n\t\t\n\t\tfor (int i = 0; i < n; i++) {\n\t\t\tdouble x = data[i].first;\n\t\t\tdouble y = data[i].second;\n\t\t\tdouble y_pred = m * x + b;\n\t\t\tdouble error = y_pred - y;\n\t\t\t\n\t\t\tm_gradient += (2.0 / n) * error * x;\n\t\t\tb_gradient += (2.0 / n) * error;\n\t\t}\n\t\t\n\t\tm -= learningRate * m_gradient;\n\t\tb -= learningRate * b_gradient;\n\t}\n}",
+    "timeComplexity": {
+      "best": "O(n)",
+      "average": "O(n*k)",
+      "worst": "O(n*k)"
+    },
+    "spaceComplexity": {
+      "best": "O(1)",
+      "average": "O(1)",
+      "worst": "O(1)"
+    }
   }
 }
