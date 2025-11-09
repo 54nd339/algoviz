@@ -373,5 +373,22 @@
       "average": "O(n*d+k*d)",
       "worst": "O(n*d+k*d)"
     }
+  },
+  "Perceptron": {
+    "title": "Perceptron",
+    "metaTitle": "Perceptron Neural Network | Algoviz",
+    "description": "The Perceptron is a fundamental artificial neural network algorithm that learns to classify data by adjusting weights through backpropagation. It uses activation functions (ReLU for hidden layers, sigmoid for output) and can learn non-linear patterns when stacked into multiple layers.",
+    "code": "class Perceptron:\n    def __init__(self, layers, learningRate=0.1):\n        self.layers = layers\n        self.lr = learningRate\n        \n    def forward(self, inputs):\n        self.activations = [inputs]\n        for layer in self.layers:\n            z = layer.weights @ inputs + layer.biases\n            a = sigmoid(z) if layer == self.layers[-1] else relu(z)\n            self.activations.append(a)\n            inputs = a\n        return a\n    \n    def backward(self, target):\n        deltas = []\n        output = self.activations[-1]\n        delta = (output - target) * sigmoid_derivative(output)\n        deltas.append(delta)\n        \n        for i in range(len(self.layers)-2, -1, -1):\n            delta = self.layers[i+1].weights.T @ deltas[-1]\n            delta *= relu_derivative(self.activations[i+1])\n            deltas.append(delta)\n        \n        for i, layer in enumerate(self.layers):\n            gradient = deltas[-(i+1)] @ self.activations[i].T\n            layer.weights -= self.lr * gradient\n            layer.biases -= self.lr * deltas[-(i+1)]",
+    "timeComplexity": {
+      "best": "O(n*m*l*e)",
+      "average": "O(n*m*l*e)",
+      "worst": "O(n*m*l*e)"
+    },
+    "spaceComplexity": {
+      "best": "O(m*l)",
+      "average": "O(m*l)",
+      "worst": "O(m*l)"
+    }
   }
 }
+

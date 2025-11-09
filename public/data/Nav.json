@@ -135,6 +135,10 @@
         {
           "id": "minimax",
           "name": "Minimax (Alpha-Beta)"
+        },
+        {
+          "id": "perceptron",
+          "name": "Perceptron"
         }
       ]
     }

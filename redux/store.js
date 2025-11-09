@@ -7,6 +7,8 @@ import hanoiSlice from "./reducers/hanoiSlice";
 import pathSlice from "./reducers/pathSlice";
 import minimaxSlice from "./reducers/minimaxSlice";
 import aiSlice from "./reducers/aiSlice";
+import perceptronSlice from "./reducers/perceptronSlice";
+
 export const store = configureStore({
   reducer: {
     sorting: sortingSlice,
@@ -17,5 +19,6 @@ export const store = configureStore({
     path: pathSlice,
     minimax: minimaxSlice,
     ai: aiSlice,
+    perceptron: perceptronSlice,
   },
 });
