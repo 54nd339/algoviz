@@ -75,6 +75,38 @@
       ]
     },
     {
+      "name": "Minimum Spanning Tree",
+      "id": "minimum-spanning-tree",
+      "algorithms": [
+        {
+          "id": "prim",
+          "name": "Prim's Algorithm"
+        },
+        {
+          "id": "kruskal",
+          "name": "Kruskal's Algorithm"
+        }
+      ]
+    },
+    {
+      "name": "Shortest Path",
+      "id": "shortest-path",
+      "algorithms": [
+        {
+          "id": "dijkstra",
+          "name": "Dijkstra"
+        },
+        {
+          "id": "bellman-ford",
+          "name": "Bellman-Ford"
+        },
+        {
+          "id": "floyd-warshall",
+          "name": "Floyd-Warshall"
+        }
+      ]
+    },
+    {
       "name": "Others",
       "id": "others",
       "algorithms": [

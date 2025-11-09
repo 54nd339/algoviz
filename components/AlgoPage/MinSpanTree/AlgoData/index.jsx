@@ -1,17 +1,18 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 
 import PrismTheme from "@/utils/PrismTheme";
 import Data from "@/public/data/algorithmData.json";
 
-const AlgoData = () => {
+export default function AlgoData() {
   let algoName = useSelector((state) => state.page.algoName);
   if (algoName) {
     let currAlgo = algoName.replace(" ", "");
     let currAlgoData = Data[currAlgo];
     if (currAlgoData) {
       return (
-        <div>
+        <>
           <div className="w-full h-[150px] bg-green-bg mt-gap font-space text-[1.5rem] lg:text-[2rem] text-text-1 flex items-center uppercase justify-center text-center">
             More About {algoName}
           </div>
@@ -78,11 +79,9 @@ const AlgoData = () => {
               </div>
             </div>
           </div>
-        </div>
+        </>
       );
     }
   }
-};
-
-export default AlgoData;
-
+  return null;
+}

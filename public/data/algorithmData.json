@@ -214,22 +214,6 @@
       "worst": "O(V)"
     }
   },
-  "Dijkstra": {
-    "title": "Dijkstra's Algorithm",
-    "metaTitle": "Dijkstra's Algorithm | Algoviz",
-    "description": "Dijkstra's algorithm is an algorithm for finding the shortest paths between nodes in a graph, which may represent, for example, road networks. It was conceived by computer scientist Edsger W. Dijkstra in 1956 and published three years later.",
-    "code": "void dijkstra(int graph[V][V], int src){\n\tint dist[V];\n\tbool sptSet[V];\n\tfor (int i = 0; i < V; i++)\n\t\tdist[i] = INT_MAX, sptSet[i] = false;\n\tdist[src] = 0;\n\tfor (int count = 0; count < V - 1; count++){\n\t\tint u = minDistance(dist, sptSet);\n\t\tsptSet[u] = true;\n\t\tfor (int v = 0; v < V; v++)\n\t\t\tif (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX\n\t\t\t\t && dist[u] + graph[u][v] < dist[v])\n\t\t\t\tdist[v] = dist[u] + graph[u][v];\n\t}\n\tprintSolution(dist, V);\n}",
-    "timeComplexity": {
-      "best": "O(V^2)",
-      "average": "O(V^2)",
-      "worst": "O(V^2)"
-    },
-    "spaceComplexity": {
-      "best": "O(V)",
-      "average": "O(V)",
-      "worst": "O(V)"
-    }
-  },
   "AStar": {
     "title": "A* Search Algorithm",
     "metaTitle": "A* Search Algorithm | Algoviz",
@@ -244,6 +228,86 @@
       "best": "O(b^d)",
       "average": "O(b^d)",
       "worst": "O(b^d)"
+    }
+  },
+  "Prim": {
+    "title": "Prim's Algorithm",
+    "metaTitle": "Prim's Algorithm | Algoviz",
+    "description": "Prim's algorithm finds a minimum spanning tree (MST) for a connected weighted undirected graph by growing the MST one edge at a time, always picking the lowest-weight edge that connects a vertex in the tree to a vertex outside it.",
+    "code": "void primMST(int graph[V][V]) {\n\tint parent[V], key[V];\n\tbool mstSet[V];\n\tfor (int i = 0; i < V; i++) {\n\t\tkey[i] = INT_MAX;\n\t\tmstSet[i] = false;\n\t}\n\tkey[0] = 0;\n\tparent[0] = -1;\n\tfor (int count = 0; count < V - 1; count++) {\n\t\tint u = -1, minKey = INT_MAX;\n\t\tfor (int v = 0; v < V; v++) {\n\t\t\tif (!mstSet[v] && key[v] < minKey) {\n\t\t\t\tminKey = key[v];\n\t\t\t\tu = v;\n\t\t\t}\n\t\t}\n\t\tmstSet[u] = true;\n\t\tfor (int v = 0; v < V; v++) {\n\t\t\tif (graph[u][v] && !mstSet[v] && graph[u][v] < key[v]) {\n\t\t\t\tparent[v] = u;\n\t\t\t\tkey[v] = graph[u][v];\n\t\t\t}\n\t\t}\n\t}\n\tfor (int i = 1; i < V; i++)\n\t\tprintf(\"%d - %d\\tweight=%d\\n\", parent[i], i, graph[i][parent[i]]);\n}",
+    "timeComplexity": {
+      "best": "O(E + V log V) (with heap)",
+      "average": "O(E + V log V)",
+      "worst": "O(E + V log V)"
+    },
+    "spaceComplexity": {
+      "best": "O(V)",
+      "average": "O(V)",
+      "worst": "O(V)"
+    }
+  },
+  "Kruskal": {
+    "title": "Kruskal's Algorithm",
+    "metaTitle": "Kruskal's Algorithm | Algoviz",
+    "description": "Kruskal's algorithm finds a minimum spanning tree (MST) for a connected weighted undirected graph by sorting all edges by weight and greedily adding them to the MST if they don't form a cycle (detected using Union-Find).",
+    "code": "class UnionFind {\npublic:\n\tvector<int> parent, rank;\n\tUnionFind(int n) {\n\t\tparent.resize(n);\n\t\trank.assign(n, 0);\n\t\tfor (int i = 0; i < n; i++) parent[i] = i;\n\t}\n\tint find(int x) {\n\t\tif (parent[x] != x) parent[x] = find(parent[x]);\n\t\treturn parent[x];\n\t}\n\tbool unite(int x, int y) {\n\t\tint px = find(x), py = find(y);\n\t\tif (px == py) return false;\n\t\tif (rank[px] < rank[py]) swap(px, py);\n\t\tparent[py] = px;\n\t\tif (rank[px] == rank[py]) rank[px]++;\n\t\treturn true;\n\t}\n};\nvoid kruskalMST(vector<Edge>& edges, int V) {\n\tsort(edges.begin(), edges.end(), [](Edge& a, Edge& b) {\n\t\treturn a.weight < b.weight;\n\t});\n\tUnionFind uf(V);\n\tint mstWeight = 0;\n\tfor (auto& e : edges) {\n\t\tif (uf.unite(e.u, e.v)) {\n\t\t\tcout << e.u << \" - \" << e.v << \" : \" << e.weight << endl;\n\t\t\tmstWeight += e.weight;\n\t\t}\n\t}\n\tcout << \"MST Weight: \" << mstWeight << endl;\n}",
+    "timeComplexity": {
+      "best": "O(E log E)",
+      "average": "O(E log E)",
+      "worst": "O(E log E)"
+    },
+    "spaceComplexity": {
+      "best": "O(V)",
+      "average": "O(V)",
+      "worst": "O(V)"
+    }
+  },
+  "Dijkstra": {
+    "title": "Dijkstra's Algorithm",
+    "metaTitle": "Dijkstra's Algorithm | Algoviz",
+    "description": "Dijkstra's algorithm finds the shortest path from a source node to all other nodes in a weighted graph with non-negative edge weights. It uses a greedy approach with a priority queue.",
+    "code": "void dijkstra(int graph[V][V], int src) {\n\tint dist[V];\n\tbool sptSet[V];\n\tfor (int i = 0; i < V; i++)\n\t\tdist[i] = INT_MAX, sptSet[i] = false;\n\tdist[src] = 0;\n\tfor (int count = 0; count < V - 1; count++) {\n\t\tint u = -1;\n\t\tint minDist = INT_MAX;\n\t\tfor (int v = 0; v < V; v++)\n\t\t\tif (!sptSet[v] && dist[v] < minDist)\n\t\t\t\tminDist = dist[v], u = v;\n\t\tsptSet[u] = true;\n\t\tfor (int v = 0; v < V; v++)\n\t\t\tif (!sptSet[v] && graph[u][v] && dist[u] != INT_MAX\n\t\t\t\t&& dist[u] + graph[u][v] < dist[v])\n\t\t\t\tdist[v] = dist[u] + graph[u][v];\n\t}\n\tfor (int i = 0; i < V; i++)\n\t\tprintf(\"Node %d -> Distance %d\\n\", i, dist[i]);\n}",
+    "timeComplexity": {
+      "best": "O((V + E) log V) (with heap)",
+      "average": "O((V + E) log V)",
+      "worst": "O(V^2) (with array)"
+    },
+    "spaceComplexity": {
+      "best": "O(V)",
+      "average": "O(V)",
+      "worst": "O(V)"
+    }
+  },
+  "BellmanFord": {
+    "title": "Bellman-Ford Algorithm",
+    "metaTitle": "Bellman-Ford Algorithm | Algoviz",
+    "description": "The Bellman-Ford algorithm finds the shortest path from a source node to all other nodes in a weighted graph. It handles negative edge weights and detects negative cycles.",
+    "code": "void bellmanFord(vector<Edge>& edges, int V, int src) {\n\tvector<int> dist(V, INT_MAX);\n\tdist[src] = 0;\n\tfor (int i = 0; i < V - 1; i++) {\n\t\tfor (auto& e : edges) {\n\t\t\tif (dist[e.u] != INT_MAX && dist[e.u] + e.weight < dist[e.v])\n\t\t\t\tdist[e.v] = dist[e.u] + e.weight;\n\t\t}\n\t}\n\tfor (auto& e : edges) {\n\t\tif (dist[e.u] != INT_MAX && dist[e.u] + e.weight < dist[e.v])\n\t\t\tcout << \"Negative cycle detected!\\n\";\n\t}\n\tfor (int i = 0; i < V; i++)\n\t\tprintf(\"Node %d -> Distance %d\\n\", i, dist[i]);\n}",
+    "timeComplexity": {
+      "best": "O(VE)",
+      "average": "O(VE)",
+      "worst": "O(VE)"
+    },
+    "spaceComplexity": {
+      "best": "O(V)",
+      "average": "O(V)",
+      "worst": "O(V)"
+    }
+  },
+  "FloydWarshall": {
+    "title": "Floyd-Warshall Algorithm",
+    "metaTitle": "Floyd-Warshall Algorithm | Algoviz",
+    "description": "The Floyd-Warshall algorithm computes shortest paths between all pairs of nodes in a weighted graph. It handles negative weights (but not negative cycles) and is useful for dense graphs.",
+    "code": "void floydWarshall(int graph[V][V]) {\n\tint dist[V][V];\n\tfor (int i = 0; i < V; i++)\n\t\tfor (int j = 0; j < V; j++)\n\t\t\tdist[i][j] = graph[i][j];\n\tfor (int k = 0; k < V; k++) {\n\t\tfor (int i = 0; i < V; i++) {\n\t\t\tfor (int j = 0; j < V; j++) {\n\t\t\t\tif (dist[i][k] != INT_MAX && dist[k][j] != INT_MAX\n\t\t\t\t\t&& dist[i][k] + dist[k][j] < dist[i][j])\n\t\t\t\t\tdist[i][j] = dist[i][k] + dist[k][j];\n\t\t\t}\n\t\t}\n\t}\n\tfor (int i = 0; i < V; i++)\n\t\tfor (int j = 0; j < V; j++)\n\t\t\tprintf(\"%d -> %d: %d\\n\", i, j, dist[i][j]);\n}",
+    "timeComplexity": {
+      "best": "O(V^3)",
+      "average": "O(V^3)",
+      "worst": "O(V^3)"
+    },
+    "spaceComplexity": {
+      "best": "O(V^2)",
+      "average": "O(V^2)",
+      "worst": "O(V^2)"
     }
   },
   "Minimax": {
