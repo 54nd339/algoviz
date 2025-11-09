@@ -117,6 +117,10 @@
         {
           "id": "knn",
           "name": "K-Nearest Neighbors"
+        },
+        {
+          "id": "k-means",
+          "name": "K-Means Clustering"
         }
       ]
     },

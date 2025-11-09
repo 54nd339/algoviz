@@ -357,5 +357,21 @@
       "average": "O(n*d)",
       "worst": "O(n*d)"
     }
+  },
+  "KMeans": {
+    "title": "K-Means Clustering",
+    "metaTitle": "K-Means Clustering | Algoviz",
+    "description": "K-Means is an unsupervised learning algorithm that partitions data into k clusters by iteratively assigning points to the nearest centroid and updating centroids based on the mean of assigned points. It minimizes intra-cluster variance and is widely used for exploratory data analysis.",
+    "code": "void kMeans(vector<pair<double, double>>& data, int k, int maxIterations) {\n\tvector<pair<double, double>> centroids(k);\n\tvector<int> assignments(data.size());\n\t\n\t// Initialize centroids randomly\n\tfor (int i = 0; i < k; i++) {\n\t\tcentroids[i] = data[rand() % data.size()];\n\t}\n\t\n\tfor (int iter = 0; iter < maxIterations; iter++) {\n\t\t// Assign points to nearest centroid\n\t\tfor (int i = 0; i < data.size(); i++) {\n\t\t\tdouble minDist = 1e9;\n\t\t\tint nearest = 0;\n\t\t\tfor (int j = 0; j < k; j++) {\n\t\t\t\tdouble dx = data[i].first - centroids[j].first;\n\t\t\t\tdouble dy = data[i].second - centroids[j].second;\n\t\t\t\tdouble dist = sqrt(dx*dx + dy*dy);\n\t\t\t\tif (dist < minDist) {\n\t\t\t\t\tminDist = dist;\n\t\t\t\t\tnearest = j;\n\t\t\t\t}\n\t\t\t}\n\t\t\tassignments[i] = nearest;\n\t\t}\n\t\t\n\t\t// Update centroids\n\t\tvector<pair<double, double>> newCentroids(k, {0, 0});\n\t\tvector<int> counts(k, 0);\n\t\tfor (int i = 0; i < data.size(); i++) {\n\t\t\tnewCentroids[assignments[i]].first += data[i].first;\n\t\t\tnewCentroids[assignments[i]].second += data[i].second;\n\t\t\tcounts[assignments[i]]++;\n\t\t}\n\t\tfor (int i = 0; i < k; i++) {\n\t\t\tif (counts[i] > 0) {\n\t\t\t\tnewCentroids[i].first /= counts[i];\n\t\t\t\tnewCentroids[i].second /= counts[i];\n\t\t\t}\n\t\t}\n\t\tcentroids = newCentroids;\n\t}\n}",
+    "timeComplexity": {
+      "best": "O(n*k*d*i)",
+      "average": "O(n*k*d*i)",
+      "worst": "O(n*k*d*i)"
+    },
+    "spaceComplexity": {
+      "best": "O(n*d+k*d)",
+      "average": "O(n*d+k*d)",
+      "worst": "O(n*d+k*d)"
+    }
   }
 }

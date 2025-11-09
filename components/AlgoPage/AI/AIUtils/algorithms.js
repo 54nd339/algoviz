@@ -234,15 +234,160 @@ export const calculateKNNStep = () => {
 };
 
 /**
- * K-MEANS PLACEHOLDER
+ * K-MEANS CLUSTERING ALGORITHM
  */
-export const calculateKMeansStep = () => {
-  // K-means implementation will go here
-};
 
 export const generateKMeansData = (count) => {
-  // K-means data generation will go here
-  return [];
+  const state = store.getState().ai;
+  const k = state.clusters || 3; // Get number of clusters from Redux, default to 3
+  const points = [];
+  const pointsPerCluster = Math.floor(count / k);
+  
+  // Generate K clusters arranged in a circle
+  for (let clusterIdx = 0; clusterIdx < k; clusterIdx++) {
+    const angle = (clusterIdx / k) * 2 * Math.PI;
+    const centerX = 5 * Math.cos(angle);
+    const centerY = 5 * Math.sin(angle);
+    
+    // Generate points for this cluster
+    for (let i = 0; i < pointsPerCluster; i++) {
+      const pointAngle = Math.random() * 2 * Math.PI;
+      const radius = Math.random() * 1.5;
+      points.push({
+        x: centerX + radius * Math.cos(pointAngle),
+        y: centerY + radius * Math.sin(pointAngle),
+        clusterAssignment: -1, // Unassigned initially
+        trueCluster: clusterIdx, // Store true cluster for validation
+      });
+    }
+  }
+  
+  // Add remaining points if count is not evenly divisible by k
+  const remaining = count - (pointsPerCluster * k);
+  for (let i = 0; i < remaining; i++) {
+    const clusterIdx = i % k;
+    const angle = (clusterIdx / k) * 2 * Math.PI;
+    const centerX = 5 * Math.cos(angle);
+    const centerY = 5 * Math.sin(angle);
+    const pointAngle = Math.random() * 2 * Math.PI;
+    const radius = Math.random() * 1.5;
+    points.push({
+      x: centerX + radius * Math.cos(pointAngle),
+      y: centerY + radius * Math.sin(pointAngle),
+      clusterAssignment: -1,
+      trueCluster: clusterIdx,
+    });
+  }
+  
+  return points;
+};
+
+export const initializeKMeansCentroids = () => {
+  try {
+    const state = store.getState().ai;
+    const dataPoints = state.dataPoints;
+    const k = state.clusters || 3;
+    
+    if (!dataPoints || dataPoints.length === 0) return [];
+    
+    // Initialize centroids by randomly selecting K data points
+    const centroids = [];
+    const selectedIndices = new Set();
+    
+    while (centroids.length < k && centroids.length < dataPoints.length) {
+      const randomIdx = Math.floor(Math.random() * dataPoints.length);
+      if (!selectedIndices.has(randomIdx)) {
+        const point = dataPoints[randomIdx];
+        if (point) {
+          centroids.push({
+            x: point.x,
+            y: point.y,
+            clusterId: centroids.length,
+          });
+          selectedIndices.add(randomIdx);
+        }
+      }
+    }
+    
+    return centroids;
+  } catch (error) {
+    console.error("Error initializing centroids:", error);
+    return [];
+  }
+};
+
+export const calculateKMeansStep = () => {
+  try {
+    const state = store.getState().ai;
+    const dataPoints = state.dataPoints;
+    let centroids = state.centroids || [];
+    
+    if (!dataPoints || dataPoints.length === 0 || !centroids || centroids.length === 0) return;
+    
+    // Step 1: Assign each point to the nearest centroid
+    const updatedDataPoints = dataPoints.map((point) => ({
+      ...point,
+      clusterAssignment: findNearestCentroid(point, centroids),
+    }));
+    
+    // Step 2: Calculate new centroids
+    const newCentroids = centroids.map((centroid) => {
+      const pointsInCluster = updatedDataPoints.filter(
+        (p) => p.clusterAssignment === centroid.clusterId
+      );
+      
+      if (pointsInCluster.length === 0) {
+        // If no points assigned, keep the old centroid
+        return centroid;
+      }
+      
+      const avgX = pointsInCluster.reduce((sum, p) => sum + p.x, 0) / pointsInCluster.length;
+      const avgY = pointsInCluster.reduce((sum, p) => sum + p.y, 0) / pointsInCluster.length;
+      
+      return {
+        x: avgX,
+        y: avgY,
+        clusterId: centroid.clusterId,
+      };
+    });
+    
+    // Update Redux with new data points and centroids
+    store.dispatch(require("@/redux/reducers/aiSlice").setDataPoints(updatedDataPoints));
+    store.dispatch(require("@/redux/reducers/aiSlice").setCentroids(newCentroids));
+    
+    // Calculate inertia (sum of squared distances from points to their centroids)
+    let inertia = 0;
+    updatedDataPoints.forEach((point) => {
+      const centroid = newCentroids.find(c => c.clusterId === point.clusterAssignment);
+      if (centroid) {
+        const distance = Math.sqrt((point.x - centroid.x) ** 2 + (point.y - centroid.y) ** 2);
+        inertia += distance * distance;
+      }
+    });
+    
+    store.dispatch(require("@/redux/reducers/aiSlice").setRSquared(inertia));
+  } catch (error) {
+    console.error("Error in K-means step:", error);
+  }
+};
+
+const findNearestCentroid = (point, centroids) => {
+  if (!centroids || centroids.length === 0 || !point) return 0;
+  
+  let minDistance = Infinity;
+  let nearestCentroidId = 0;
+  
+  centroids.forEach((centroid) => {
+    if (centroid) {
+      const distance = Math.sqrt((point.x - centroid.x) ** 2 + (point.y - centroid.y) ** 2);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestCentroidId = centroid.clusterId;
+      }
+    }
+  });
+  
+  return nearestCentroidId;
 };
 
 /**

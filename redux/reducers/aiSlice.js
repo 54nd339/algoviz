@@ -12,6 +12,10 @@ const initialState = {
   // KNN parameters
   k: 3, // Number of neighbors for KNN
   
+  // K-means parameters
+  clusters: 3, // Number of clusters for K-means
+  centroids: [], // Centroid positions {x, y, clusterId}
+  
   // Training parameters
   running: false,
   learningRate: 0.01,
@@ -50,6 +54,12 @@ export const aiSlice = createSlice({
     },
     setK: (state, action) => {
       state.k = action.payload;
+    },
+    setClusters: (state, action) => {
+      state.clusters = action.payload;
+    },
+    setCentroids: (state, action) => {
+      state.centroids = action.payload;
     },
     setRunning: (state, action) => {
       state.running = action.payload;
@@ -93,11 +103,16 @@ export const aiSlice = createSlice({
       state.iterations++;
     },
     addPoint: (state, action) => {
+      // Get current algorithm from page state (if accessible) or create flexible point structure
       const newPoint = {
         x: action.payload.x,
         y: action.payload.y,
-        class: -1, // Unclassified
-        trueClass: -2, // User-added point marker
+        // KNN/LR properties
+        class: -1,
+        trueClass: -2,
+        // K-means properties
+        clusterAssignment: -1,
+        trueCluster: -2,
       };
       state.dataPoints.push(newPoint);
       state.pointCount = state.dataPoints.length;
@@ -110,6 +125,8 @@ export const {
   setSlope,
   setIntercept,
   setK,
+  setClusters,
+  setCentroids,
   setRunning,
   setLearningRate,
   setIterations,

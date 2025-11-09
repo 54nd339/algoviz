@@ -8,11 +8,8 @@ let tailwindColors = tailwindConfiger.theme.colors;
 
 const IterationsTheme = createTheme({
   palette: {
-    IterationsPrimary: {
+    primary: {
       main: tailwindColors["cyan"],
-    },
-    IterationsSecondary: {
-      main: tailwindColors["cyan-bg"],
     },
   },
 });
@@ -38,7 +35,7 @@ export default function IterationsController() {
           min={10}
           max={500}
           step={10}
-          color="IterationsPrimary"
+          color="primary"
           onChangeCommitted={(e, val) => {
             updateIterations(val);
           }}

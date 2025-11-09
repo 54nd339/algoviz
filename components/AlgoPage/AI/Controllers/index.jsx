@@ -4,6 +4,7 @@ import SpeedController from "./SpeedController";
 import IterationsController from "./IterationsController";
 import LearningRateController from "./LearningRateController";
 import GroupsController from "./GroupsController";
+import ClustersController from "./ClustersController";
 import GenerateButton from "./GenerateButton";
 
 export default function AIControllers() {
@@ -13,8 +14,8 @@ export default function AIControllers() {
     <div className="flex flex-row gap-gap py-gap w-full h-[70px] select-none overflow-x-auto">
       <GenerateButton />
       <SpeedController />
-      {algoId !== "knn" && <IterationsController />}
-      {algoId === "knn" ? <GroupsController /> : <LearningRateController />}
+      {algoId !== "knn" && algoId !== "k-means" && <IterationsController />}
+      {algoId === "knn" ? <GroupsController /> : algoId === "k-means" ? <ClustersController /> : <LearningRateController />}
       <StartButton />
     </div>
   );

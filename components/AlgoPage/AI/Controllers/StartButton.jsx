@@ -1,6 +1,6 @@
 import { useDispatch, useSelector, useStore } from "react-redux";
-import { setRunning, resetStats } from "@/redux/reducers/aiSlice";
-import { performAlgorithmStep } from "../AIUtils/algorithms";
+import { setRunning, resetStats, setCentroids } from "@/redux/reducers/aiSlice";
+import { performAlgorithmStep, initializeKMeansCentroids } from "../AIUtils/algorithms";
 
 const StartButton = () => {
   const dispatch = useDispatch();
@@ -8,9 +8,17 @@ const StartButton = () => {
   const running = useSelector((state) => state.ai.running);
   const maxIterations = useSelector((state) => state.ai.maxIterations);
   const speed = useSelector((state) => state.ai.speed);
+  const algoId = useSelector((state) => state.page.algoId);
 
   const startTraining = async () => {
     dispatch(resetStats());
+    
+    // Initialize centroids for K-means if needed
+    if (algoId === "k-means") {
+      const centroids = initializeKMeansCentroids();
+      dispatch(setCentroids(centroids));
+    }
+    
     dispatch(setRunning(true));
     
     let currentIterations = 0;

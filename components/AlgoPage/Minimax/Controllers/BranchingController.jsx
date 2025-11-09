@@ -15,7 +15,7 @@ const BranchTheme = createTheme({
       main: colors["yellow"],
       light: colors["yellow"],
       dark: colors["yellow"],
-      contrastText: "#000",
+      contrastText: "#fff",
     },
   },
 });
@@ -30,7 +30,7 @@ const BranchingController = () => {
   };
 
   return (
-    <div className="hidden w-full h-full px-[2rem] bg-yellow lg:flex gap-[1.5rem] justify-center items-center text-bg-1 font-space uppercase border-l-[10px] border-yellow text-lg hover:cursor-pointer select-none">
+    <div className="hidden w-full h-full px-[2rem] bg-yellow-bg lg:flex gap-[1.5rem] justify-center items-center text-text-1 font-space uppercase border-l-[10px] border-yellow text-lg hover:cursor-pointer select-none">
       Branching
       <ThemeProvider theme={BranchTheme}>
         <Slider

@@ -8,11 +8,8 @@ let tailwindColors = tailwindConfiger.theme.colors;
 
 const SpeedTheme = createTheme({
   palette: {
-    SpeedPrimary: {
+    primary: {
       main: tailwindColors["purple"],
-    },
-    SpeedSecondary: {
-      main: tailwindColors["purple-bg"],
     },
   },
 });
@@ -38,7 +35,7 @@ export default function SpeedController() {
           defaultValue={speed}
           min={0}
           max={maxSpeed}
-          color="SpeedPrimary"
+          color="primary"
           onChangeCommitted={(e, val) => {
             updateSpeed(val);
           }}

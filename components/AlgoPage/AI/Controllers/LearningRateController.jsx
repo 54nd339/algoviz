@@ -8,11 +8,8 @@ let tailwindColors = tailwindConfiger.theme.colors;
 
 const LearningRateTheme = createTheme({
   palette: {
-    LearningRatePrimary: {
+    primary: {
       main: tailwindColors["yellow"],
-    },
-    LearningRateSecondary: {
-      main: tailwindColors["yellow-bg"],
     },
   },
 });
@@ -38,7 +35,7 @@ export default function LearningRateController() {
           min={1}
           max={50}
           step={1}
-          color="LearningRatePrimary"
+          color="primary"
           onChangeCommitted={(e, val) => {
             updateLearningRate(val);
           }}
