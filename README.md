@@ -7,47 +7,70 @@ AlgoViz is a web app for visualizing various algorithms. It is built using Next.
 - Next.js
 - Redux
 - TailwindCSS
+- Docker
+- GitHub Actions (CI/CD)
 
 ## Features
 
-- Sorting Visualizer
-- Searching Visualizer
-- Pathfinding Visualizer
-- Minimum Spanning Tree Visualizer
-- Shortest Path Visualizer
-- Tower of Hanoi Visualizer
-- Minimax Algorithm Visualizer
-- **AI & Machine Learning Visualizers** ✨ NEW!
-  - Linear Regression (with interactive gradient descent)
-  - K-Nearest Neighbor (coming soon)
-  - K-Means Clustering (coming soon)
-  - Perceptron/Neural Networks (coming soon)
+### Sorting Algorithms
+- Bubble Sort, Insertion Sort, Selection Sort
+- Merge Sort, Quick Sort, Heap Sort
+- Radix Sort
+
+### Searching Algorithms
+- Linear Search, Binary Search
+- Jump Search, Interpolation Search
+
+### Graph Algorithms
+- **Pathfinding**: Depth-First Search (DFS), Breadth-First Search (BFS), A* Search
+- **Minimum Spanning Tree**: Prim's Algorithm, Kruskal's Algorithm
+- **Shortest Path**: Dijkstra's, Bellman-Ford, Floyd-Warshall
+
+### Game & Puzzle Solvers
+- Tower of Hanoi Solver
+- N-Queen Problem Solver
+- Sudoku Solver (Backtracking)
+- Knight's Tour (Warnsdorff's Heuristic)
+- Minimax with Alpha-Beta Pruning
+
+### Machine Learning & AI
+- **Linear Regression** (with interactive gradient descent)
+- **K-Nearest Neighbors** (KNN)
+- **K-Means Clustering**
+- **Perceptron** (Neural Networks)
+
+### Cellular Automata
+- **Conway's Game of Life**
+
 
 ## Installation
 
-1. Clone the repository
+### Local Development
 ```bash
 git clone https://github.com/54nd339/algoviz.git
-```
-2. Install the dependencies
-```bash
+cd algoviz
 npm install
-```
-3. Run the app in development mode
-```bash
 npm run dev
 ```
-4. For production build
+
+### Docker
+```bash
+docker build -t algoviz .
+docker run -p 3000:3000 algoviz
+```
+
+### Production Build
 ```bash
 npm run build
-```
-5. For production start
-```bash
 npm run start
 ```
 
-## To-do
+## CI/CD
 
-- [ ] K-Nearest Neighbor (AI)
-- [ ] K-Means Clustering (AI)
-- [ ] Perceptron (AI)
+This project uses GitHub Actions for automated Docker builds and deployments:
+- **On Push to Master**: Builds and pushes image to DockerHub with `:latest` tag
+- **On Pull Request**: Validates Docker build for PRs
+
+Required secrets for CI/CD:
+- `DOCKER_USERNAME`
+- `DOCKER_PASSWORD`
