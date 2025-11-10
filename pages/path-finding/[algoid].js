@@ -1,21 +1,20 @@
-import React from "react";
-import { batch } from "react-redux";
-import { useEffect } from "react";
+import { batch, useDispatch } from "react-redux";
+import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+
 import Seo from "@/components/Seo";
 import Footer from "@/components/Footer";
-import { ToProperCase } from "@/utils";
-import {
-  setAlgoId,
-  setAlgoName,
-  setAlgoCategory,
-} from "@/redux/reducers/pageSlice";
 import { AlgoData } from "@/components/Shared";
 import StatsContainer from "@/components/AlgoPage/PathFinding/Stats";
 import VisualizerContainer from "@/components/AlgoPage/PathFinding/Visualizer";
 import generateGrid from "@/components/AlgoPage/PathFinding/MazeUtils/generateGrid";
 import MazeGenerationControllers from "@/components/AlgoPage/PathFinding/Controllers";
+import {
+  setAlgoId,
+  setAlgoName,
+  setAlgoCategory,
+} from "@/redux/reducers/pageSlice";
+import { ToProperCase } from "@/utils";
 
 export default function Sorting() {
   const router = useRouter();

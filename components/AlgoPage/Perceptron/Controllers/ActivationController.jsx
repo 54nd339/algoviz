@@ -15,7 +15,7 @@ const ActivationController = () => {
   };
 
   return (
-    <div className="hidden w-full h-full px-[2rem] bg-cyan-bg lg:flex gap-[1.5rem] justify-center items-center text-text-1 font-space uppercase border-l-[10px] border-cyan text-lg hover:cursor-pointer select-none">
+    <div className="hidden w-full h-full px-[2rem] bg-yellow-bg lg:flex gap-[1.5rem] justify-center items-center text-text-1 font-space uppercase border-l-[10px] border-yellow text-lg hover:cursor-pointer select-none">
       Activation
       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
         <Select
@@ -30,7 +30,7 @@ const ActivationController = () => {
               borderColor: "rgba(255,255,255,0.5)",
             },
             "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: "#00ffff",
+              borderColor: "#e5c454",
             },
             ".MuiSvgIcon-root": {
               color: "white",

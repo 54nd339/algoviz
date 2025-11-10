@@ -8,9 +8,9 @@ const PerceptronControllers = () => {
   return (
     <div className="flex flex-row gap-gap py-gap w-full h-[70px] select-none">
       <GenerateButton />
+      <SpeedController />
       <LayerController />
       <ActivationController />
-      <SpeedController />
       <StartButton />
     </div>
   );

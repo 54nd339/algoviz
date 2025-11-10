@@ -10,6 +10,8 @@ import aiSlice from "./reducers/aiSlice";
 import perceptronSlice from "./reducers/perceptronSlice";
 import sudokuSlice from "./reducers/sudokuSlice";
 import gameOfLifeSlice from "./reducers/gameOfLifeSlice";
+import touringKnightSlice from "./reducers/touringKnightSlice";
+import nQueenSlice from "./reducers/nQueenSlice";
 
 export const store = configureStore({
   reducer: {
@@ -24,5 +26,7 @@ export const store = configureStore({
     perceptron: perceptronSlice,
     sudoku: sudokuSlice,
     gameOfLife: gameOfLifeSlice,
+    touringKnight: touringKnightSlice,
+    nQueen: nQueenSlice,
   },
 });

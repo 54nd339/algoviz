@@ -8,7 +8,7 @@ import VisualizerContainer from "@/components/AlgoPage/SudokuSolver/Visualizer";
 import StatsContainer from "@/components/AlgoPage/SudokuSolver/Stats";
 import { AlgoData } from "@/components/Shared";
 import { setBoard, setOriginalBoard } from "@/redux/reducers/sudokuSlice";
-import { setAlgoName } from "@/redux/reducers/pageSlice";
+import { setAlgoName, setAlgoId, setAlgoCategory } from "@/redux/reducers/pageSlice";
 import { generateSudokuPuzzle } from "@/components/AlgoPage/SudokuSolver/SudokuUtils/algorithms";
 
 export default function SudokuPage() {
@@ -18,7 +18,9 @@ export default function SudokuPage() {
   useEffect(() => {
     // Initialize with a puzzle on page load (async)
     batch(() => {
-      dispatch(setAlgoName("Sudoku"));
+      dispatch(setAlgoId("sudoku"));
+      dispatch(setAlgoName("Sudoku Solver"));
+      dispatch(setAlgoCategory("others"));
     });
 
     const initializePuzzle = async () => {

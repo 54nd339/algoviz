@@ -10,9 +10,9 @@ const SpeedTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: colors["yellow"],
-      light: colors["yellow"],
-      dark: colors["yellow"],
+      main: colors["purple"],
+      light: colors["purple"],
+      dark: colors["purple"],
       contrastText: "#fff",
     },
   },
@@ -29,7 +29,7 @@ const SpeedController = () => {
   };
 
   return (
-    <div className="hidden w-full h-full px-[2rem] bg-yellow-bg lg:flex gap-[1.5rem] justify-center items-center text-text-1 font-space uppercase border-l-[10px] border-yellow text-lg hover:cursor-pointer select-none">
+    <div className="hidden w-full h-full px-[2rem] bg-purple-bg lg:flex gap-[1.5rem] justify-center items-center text-text-1 font-space uppercase border-l-[10px] border-purple text-lg hover:cursor-pointer select-none">
       Speed
       <ThemeProvider theme={SpeedTheme}>
         <Slider
@@ -45,7 +45,6 @@ const SpeedController = () => {
           }}
         />
       </ThemeProvider>
-      <div className="hidden xl:block text-[1rem] text-bg-1">{speed}ms</div>
     </div>
   );
 };

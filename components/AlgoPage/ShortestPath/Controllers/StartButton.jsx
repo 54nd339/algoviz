@@ -56,7 +56,7 @@ export default function StartButton() {
     <div className="relative w-full h-full lg:max-w-[250px] flex">
       {isRunning === false ? (
         <div
-          className="w-full h-full bg-blue-bg flex justify-center items-center text-text-1 font-space uppercase border-l-[10px] border-blue text-[1rem] md:text-lg hover:cursor-pointer hover:bg-blue hover:text-bg-1 select-none leading-[105%]"
+          className="w-full h-full bg-green-bg flex justify-center items-center text-text-1 font-space uppercase border-l-[10px] border-green text-[1rem] md:text-lg hover:cursor-pointer hover:bg-green hover:text-bg-1 select-none leading-[105%]"
           onClick={start}
         >
           Start

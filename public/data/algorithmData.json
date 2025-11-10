@@ -378,7 +378,7 @@
     "title": "Perceptron",
     "metaTitle": "Perceptron Neural Network | Algoviz",
     "description": "The Perceptron is a fundamental artificial neural network algorithm that learns to classify data by adjusting weights through backpropagation. It uses activation functions (ReLU for hidden layers, sigmoid for output) and can learn non-linear patterns when stacked into multiple layers.",
-    "code": "struct Layer {\n\tvector<vector<double>> weights;\n\tvector<double> biases;\n\tvector<double> z, activations;\n};\n\nclass Perceptron {\npublic:\n\tvector<Layer> layers;\n\tdouble learningRate;\n\t\n\tPerceptron(vector<int>& layerSizes, double lr = 0.1) : learningRate(lr) {\n\t\tfor (int i = 0; i < layerSizes.size() - 1; i++) {\n\t\t\tLayer layer;\n\t\t\tlayer.weights.resize(layerSizes[i+1], vector<double>(layerSizes[i]));\n\t\t\tlayer.biases.resize(layerSizes[i+1], 0.0);\n\t\t\tfor (auto& row : layer.weights)\n\t\t\t\tfor (auto& w : row) w = (double)rand()/RAND_MAX - 0.5;\n\t\t\tlayers.push_back(layer);\n\t\t}\n\t}\n\t\n\tdouble sigmoid(double x) {\n\t\treturn 1.0 / (1.0 + exp(-x));\n\t}\n\t\n\tdouble relu(double x) {\n\t\treturn max(0.0, x);\n\t}\n\t\n\tvector<double> forward(vector<double>& input) {\n\t\tvector<double> activation = input;\n\t\tfor (auto& layer : layers) {\n\t\t\tlayer.activations = activation;\n\t\t\tvector<double> newActivation(layer.weights.size());\n\t\t\tfor (int i = 0; i < layer.weights.size(); i++) {\n\t\t\t\tdouble z = layer.biases[i];\n\t\t\t\tfor (int j = 0; j < layer.weights[i].size(); j++)\n\t\t\t\t\tz += layer.weights[i][j] * activation[j];\n\t\t\t\tlayer.z.push_back(z);\n\t\t\t\tnewActivation[i] = sigmoid(z);\n\t\t\t}\n\t\t\tactivation = newActivation;\n\t\t}\n\t\treturn activation;\n\t}\n};",
+    "code": "struct Layer {\n\tvector<vector<double>> weights;\n\tvector<double> biases;\n\tvector<double> z, activations;\n};\n\nclass Perceptron {\npublic:\n\tvector<Layer> layers;\n\tdouble learningRate;\n\t\n\tPerceptron(vector<int>& layerSizes, double lr = 0.1)\n\t\t: learningRate(lr) {\n\t\tfor (int i = 0; i < layerSizes.size() - 1; i++) {\n\t\t\tLayer layer;\n\t\t\tlayer.weights.resize(\n\t\t\t\tlayerSizes[i+1], \n\t\t\t\tvector<double>(layerSizes[i])\n\t\t\t);\n\t\t\tlayer.biases.resize(layerSizes[i+1], 0.0);\n\t\t\tfor (auto& row : layer.weights) {\n\t\t\t\tfor (auto& w : row) {\n\t\t\t\t\tw = (double)rand()/RAND_MAX - 0.5;\n\t\t\t\t}\n\t\t\t}\n\t\t\tlayers.push_back(layer);\n\t\t}\n\t}\n\t\n\tdouble sigmoid(double x) {\n\t\treturn 1.0 / (1.0 + exp(-x));\n\t}\n\t\n\tdouble relu(double x) {\n\t\treturn max(0.0, x);\n\t}\n\t\n\tvector<double> forward(vector<double>& input) {\n\t\tvector<double> activation = input;\n\t\tfor (auto& layer : layers) {\n\t\t\tlayer.activations = activation;\n\t\t\tvector<double> newActivation(\n\t\t\t\tlayer.weights.size()\n\t\t\t);\n\t\t\tfor (int i = 0; i < layer.weights.size();\n\t\t\t     i++) {\n\t\t\t\tdouble z = layer.biases[i];\n\t\t\t\tfor (int j = 0; \n\t\t\t\t     j < layer.weights[i].size();\n\t\t\t\t     j++) {\n\t\t\t\t\tz += layer.weights[i][j] * \n\t\t\t\t\t    activation[j];\n\t\t\t\t}\n\t\t\t\tlayer.z.push_back(z);\n\t\t\t\tnewActivation[i] = sigmoid(z);\n\t\t\t}\n\t\t\tactivation = newActivation;\n\t\t}\n\t\treturn activation;\n\t}\n};",
     "timeComplexity": {
       "best": "O(n*m*l*e)",
       "average": "O(n*m*l*e)",
@@ -420,6 +420,38 @@
       "best": "O(n²)",
       "average": "O(n²)",
       "worst": "O(n²)"
+    }
+  },
+  "TouringKnight": {
+    "title": "Touring Knight (Knight's Tour)",
+    "metaTitle": "Knight's Tour Problem | Algoviz",
+    "description": "The Knight's Tour problem is to find a sequence of moves where a knight visits every square of a chessboard exactly once. This visualizer uses Warnsdorff's heuristic combined with backtracking to efficiently find a solution. Warnsdorff's rule prioritizes moves to squares with fewer onward moves, significantly improving performance.",
+    "code": "int countOnwardMoves(vector<vector<int>>& board, int row, int col,\n\t\t\t\t   int size) {\n\tint moves[8][2] = {{2,1},{2,-1},{-2,1},{-2,-1},\n\t\t\t      {1,2},{1,-2},{-1,2},{-1,-2}};\n\tint count = 0;\n\tfor (int i = 0; i < 8; i++) {\n\t\tint newRow = row + moves[i][0];\n\t\tint newCol = col + moves[i][1];\n\t\tif (newRow >= 0 && newRow < size && \n\t\t    newCol >= 0 && newCol < size && \n\t\t    board[newRow][newCol] == -1)\n\t\t\tcount++;\n\t}\n\treturn count;\n}\n\nbool solveKnightTour(vector<vector<int>>& board, int row, int col,\n\t\t\t   int moveNum, int size) {\n\tint moves[8][2] = {{2,1},{2,-1},{-2,1},{-2,-1},\n\t\t\t      {1,2},{1,-2},{-1,2},{-1,-2}};\n\tboard[row][col] = moveNum;\n\t\n\tif (moveNum == size * size - 1) return true;\n\t\n\tvector<pair<int,int>> nextMoves;\n\tfor (int i = 0; i < 8; i++) {\n\t\tint newRow = row + moves[i][0];\n\t\tint newCol = col + moves[i][1];\n\t\tif (newRow >= 0 && newRow < size && \n\t\t    newCol >= 0 && newCol < size && \n\t\t    board[newRow][newCol] == -1) {\n\t\t\tint onwardCount = countOnwardMoves(board, newRow,\n\t\t\t\t\t\t\t   newCol, size);\n\t\t\tnextMoves.push_back({onwardCount, i});\n\t\t}\n\t}\n\t\n\tsort(nextMoves.begin(), nextMoves.end());\n\tfor (auto& p : nextMoves) {\n\t\tint i = p.second;\n\t\tint newRow = row + moves[i][0];\n\t\tint newCol = col + moves[i][1];\n\t\tif (solveKnightTour(board, newRow, newCol, \n\t\t\t\t   moveNum + 1, size))\n\t\t\treturn true;\n\t}\n\t\n\tboard[row][col] = -1;\n\treturn false;\n}",
+    "timeComplexity": {
+      "best": "O(n²)",
+      "average": "O(n²)",
+      "worst": "O(n⁴) (without heuristic)"
+    },
+    "spaceComplexity": {
+      "best": "O(n²)",
+      "average": "O(n²)",
+      "worst": "O(n²)"
+    }
+  },
+  "NQueen": {
+    "title": "N-Queen Problem",
+    "metaTitle": "N-Queen Problem | Algoviz",
+    "description": "The N-Queen problem is to place N queens on an N×N chessboard such that no two queens threaten each other. Queens can attack horizontally, vertically, and diagonally. This visualizer uses backtracking to find all possible solutions for a given board size. It efficiently prunes branches that violate constraints.",
+    "code": "bool isSafe(vector<vector<int>>& board, int row, int col,\n\t      int n) {\n\t// Check column\n\tfor (int i = 0; i < row; i++) {\n\t\tif (board[i][col]) return false;\n\t}\n\t// Check upper left diagonal\n\tfor (int i = row, j = col; i >= 0 && j >= 0; \n\t     i--, j--) {\n\t\tif (board[i][j]) return false;\n\t}\n\t// Check upper right diagonal\n\tfor (int i = row, j = col; i >= 0 && j < n; \n\t     i--, j++) {\n\t\tif (board[i][j]) return false;\n\t}\n\treturn true;\n}\n\nvoid solveNQueens(vector<vector<int>>& board, int row, int n,\n\t\t   vector<vector<vector<int>>>& solutions) {\n\tif (row == n) {\n\t\tsolutions.push_back(board);\n\t\treturn;\n\t}\n\t\n\tfor (int col = 0; col < n; col++) {\n\t\tif (isSafe(board, row, col, n)) {\n\t\t\tboard[row][col] = 1;\n\t\t\tsolveNQueens(board, row + 1, n, \n\t\t\t\t     solutions);\n\t\t\tboard[row][col] = 0;\n\t\t}\n\t}\n}\n\nvector<vector<vector<int>>> nQueens(int n) {\n\tvector<vector<vector<int>>> solutions;\n\tvector<vector<int>> board(n, \n\t\t\t\t  vector<int>(n, 0));\n\tsolveNQueens(board, 0, n, solutions);\n\treturn solutions;\n}",
+    "timeComplexity": {
+      "best": "O(N!)",
+      "average": "O(N!)",
+      "worst": "O(N!)"
+    },
+    "spaceComplexity": {
+      "best": "O(N²)",
+      "average": "O(N²)",
+      "worst": "O(N²)"
     }
   }
 }

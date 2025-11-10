@@ -2,8 +2,8 @@ import { Slider } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import { setGridSize, setGrid, resetMetrics } from "@/redux/reducers/gameOfLifeSlice";
-import { initializeEmptyGrid } from "../GameOfLifeUtils/algorithms";
+import { setBoardSize, setBoard } from "@/redux/reducers/nQueenSlice";
+import { initializeBoard } from "../NQueenUtils/algorithms";
 
 const tailwindConfiger = require("/tailwind.config.js");
 const tailwindColors = tailwindConfiger.theme.colors;
@@ -20,39 +20,34 @@ const CountTheme = createTheme({
   },
 });
 
-const GridSizeController = () => {
+const BoardSizeController = () => {
   const dispatch = useDispatch();
-  const gridSize = useSelector((state) => state.gameOfLife.gridSize);
-  const isRunning = useSelector((state) => state.gameOfLife.isRunning);
-
-  const handleChange = (event, newSize) => {
-    if (!isRunning) {
-      dispatch(setGridSize(newSize));
-      // Initialize empty user board
-      const newGrid = initializeEmptyGrid(newSize);
-      dispatch(resetMetrics());
-      dispatch(setGrid(newGrid));
-    }
+  const boardSize = useSelector((state) => state.nQueen.boardSize);
+  
+  const handleSizeChange = (event, newSize) => {
+    dispatch(setBoardSize(newSize));
+    const newBoard = initializeBoard(newSize);
+    dispatch(setBoard(newBoard));
   };
 
   return (
     <div className="hidden w-[100%] h-full px-[2rem] bg-cyan-bg lg:flex gap-[1.5rem] justify-center items-center text-text-1 font-space uppercase border-l-[10px] border-cyan text-lg hover:cursor-pointer select-none">
-      Grid Size
+      N
       <ThemeProvider theme={CountTheme}>
         <Slider
           className="Slider"
-          aria-label="Grid Size Slider"
-          value={gridSize}
+          aria-label="Board Size Slider"
+          value={boardSize}
           defaultValue={3}
-          min={1}
-          max={4}
+          min={4}
+          max={12}
           step={1}
           color="CountPrimary"
-          onChange={handleChange}
+          onChange={handleSizeChange}
         />
       </ThemeProvider>
     </div>
   );
 };
 
-export default GridSizeController;
+export default BoardSizeController;

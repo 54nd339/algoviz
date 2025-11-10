@@ -12,9 +12,9 @@ const LayerTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: colors["purple"],
-      light: colors["purple"],
-      dark: colors["purple"],
+      main: colors["cyan"],
+      light: colors["cyan"],
+      dark: colors["cyan"],
       contrastText: "#fff",
     },
   },
@@ -36,7 +36,7 @@ const LayerController = () => {
   };
 
   return (
-    <div className="hidden w-full h-full px-[2rem] bg-purple-bg lg:flex gap-[1.5rem] justify-center items-center text-text-1 font-space uppercase border-l-[10px] border-purple text-lg hover:cursor-pointer select-none">
+    <div className="hidden w-full h-full px-[2rem] bg-cyan-bg lg:flex gap-[1.5rem] justify-center items-center text-text-1 font-space uppercase border-l-[10px] border-cyan text-lg hover:cursor-pointer select-none">
       Layers
       <ThemeProvider theme={LayerTheme}>
         <Slider
@@ -52,7 +52,6 @@ const LayerController = () => {
           }}
         />
       </ThemeProvider>
-      <div className="hidden xl:block text-[1rem] text-bg-1">{layers}</div>
     </div>
   );
 };

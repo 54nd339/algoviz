@@ -23,10 +23,6 @@ const SpeedController = () => {
   const speed = useSelector((state) => state.sudoku.speed);
   const maxSpeed = useSelector((state) => state.sudoku.maxSpeed);
 
-  const handleChange = (event, newValue) => {
-    dispatch(setSpeed(newValue));
-  };
-
   return (
     <div className="hidden w-[100%] h-full px-[2rem] bg-purple-bg lg:flex gap-[1.5rem] justify-center items-center text-text-1 font-space uppercase border-l-[10px] border-purple text-lg hover:cursor-pointer select-none">
       Speed
@@ -39,7 +35,7 @@ const SpeedController = () => {
           max={maxSpeed}
           color="SpeedPrimary"
           onChangeCommitted={(e, val) => {
-            updateAlgoSpeed(val);
+            dispatch(setSpeed(maxSpeed - val));
           }}
         />
       </ThemeProvider>

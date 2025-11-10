@@ -147,6 +147,14 @@
         {
           "id": "game-of-life",
           "name": "Game of Life"
+        },
+        {
+          "id": "touring-knight",
+          "name": "Touring Knight"
+        },
+        {
+          "id": "n-queen",
+          "name": "N-Queen Problem"
         }
       ]
     }
