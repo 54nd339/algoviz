@@ -143,6 +143,10 @@
         {
           "id": "sudoku",
           "name": "Sudoku Solver"
+        },
+        {
+          "id": "game-of-life",
+          "name": "Game of Life"
         }
       ]
     }

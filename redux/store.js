@@ -9,6 +9,7 @@ import minimaxSlice from "./reducers/minimaxSlice";
 import aiSlice from "./reducers/aiSlice";
 import perceptronSlice from "./reducers/perceptronSlice";
 import sudokuSlice from "./reducers/sudokuSlice";
+import gameOfLifeSlice from "./reducers/gameOfLifeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,5 +23,6 @@ export const store = configureStore({
     ai: aiSlice,
     perceptron: perceptronSlice,
     sudoku: sudokuSlice,
+    gameOfLife: gameOfLifeSlice,
   },
 });

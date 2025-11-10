@@ -155,7 +155,13 @@ const Visualizer = () => {
 
       <div className="flex flex-col justify-center items-center gap-gap w-full relative">
         {/* Board Grid */}
-        <div className="mx-auto">
+        <div className="relative border-[2px]"
+          style={{
+            width: boardSize * cellSize + Math.floor(boardSize / boxSize) * 2,
+            height: boardSize * cellSize + Math.floor(boardSize / boxSize) * 2,
+            cursor: isUserInputMode && !isRunning ? "text" : "default",
+          }}
+        >
           {/* Grid */}
           {displayBoard.map((row, i) => (
             row.map((cell, j) => {

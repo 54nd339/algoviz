@@ -405,6 +405,22 @@
       "average": "O(n*m)",
       "worst": "O(n*m)"
     }
+  },
+  "GameOfLife": {
+    "title": "Conway's Game of Life",
+    "metaTitle": "Game of Life | Algoviz",
+    "description": "Conway's Game of Life is a cellular automaton devised by mathematician John Horton Conway. It is a zero-player game that evolves based on its initial state, requiring no further input. The game consists of a grid of cells, each of which can be either alive or dead. The state of the grid evolves in discrete time steps according to simple rules based on the number of live neighbors each cell has.",
+    "code": "int countAliveNeighbors(vector<vector<int>>& grid, int row, int col, int size) {\n\tint count = 0;\n\tfor (int i = -1; i <= 1; i++) {\n\t\tfor (int j = -1; j <= 1; j++) {\n\t\t\tif (i == 0 && j == 0) continue;\n\t\t\tint newRow = (row + i + size) % size;\n\t\t\tint newCol = (col + j + size) % size;\n\t\t\tcount += grid[newRow][newCol];\n\t\t}\n\t}\n\treturn count;\n}\n\nvector<vector<int>> computeNextGeneration(vector<vector<int>>& grid) {\n\tint size = grid.size();\n\tvector<vector<int>> newGrid(size, vector<int>(size, 0));\n\t\n\tfor (int i = 0; i < size; i++) {\n\t\tfor (int j = 0; j < size; j++) {\n\t\t\tint neighbors = countAliveNeighbors(grid, i, j, size);\n\t\t\tbool isAlive = grid[i][j] == 1;\n\t\t\t\n\t\t\tif (isAlive && (neighbors == 2 || neighbors == 3)) {\n\t\t\t\tnewGrid[i][j] = 1;  // Alive cell survives\n\t\t\t} else if (!isAlive && neighbors == 3) {\n\t\t\t\tnewGrid[i][j] = 1;  // Dead cell with 3 neighbors becomes alive\n\t\t\t}\n\t\t}\n\t}\n\treturn newGrid;\n}",
+    "timeComplexity": {
+      "best": "O(n²)",
+      "average": "O(n²)",
+      "worst": "O(n²)"
+    },
+    "spaceComplexity": {
+      "best": "O(n²)",
+      "average": "O(n²)",
+      "worst": "O(n²)"
+    }
   }
 }
 
