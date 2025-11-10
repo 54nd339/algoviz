@@ -48,7 +48,7 @@ const PerceptronPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const rawAlgoId = "perceptron";
+    const rawAlgoId = 'perceptron';
     const algoName = ToProperCase(rawAlgoId);
 
     dispatch(setIsRunning(false));

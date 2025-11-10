@@ -100,7 +100,7 @@ const Visualizer = () => {
                   fontSize: `${Math.max(8, cellSize * 0.4)}px`,
                 }}
               >
-                {value !== -1 && isComplete && (
+                {value !== -1 && (
                   <span className="text-text-1 font-mono text-xs font-bold">
                     {value + 1}
                   </span>

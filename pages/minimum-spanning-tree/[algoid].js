@@ -30,14 +30,14 @@ export default function GraphTraversal() {
       batch(() => {
         dispatch(setAlgoId(rawAlgoId));
         dispatch(setAlgoName(algoName));
-        dispatch(setAlgoCategory("graph-traversal"));
+        dispatch(setAlgoCategory("minimum-spanning-tree"));
       });
     }
   });
 
   return (
     <div>
-      <Seo category="graph-traversal" id={router.query.algoid} />
+      <Seo category="minimum-spanning-tree" id={router.query.algoid} />
       <div className="px-gap">
         <GraphTraversalControllers />
         <VisualizerContainer />

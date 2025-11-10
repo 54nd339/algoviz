@@ -1,14 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import { resetSolver } from "@/redux/reducers/nQueenSlice";
-
 import { initializeBoard } from "../NQueenUtils/algorithms";
-import { setBoard } from "@/redux/reducers/nQueenSlice";
+import { setBoard, setIsRunning } from "@/redux/reducers/nQueenSlice";
+import { setStopped } from "./stopFlag";
 
 const ResetButton = () => {
   const dispatch = useDispatch();
   const boardSize = useSelector((state) => state.nQueen.boardSize);
+  const isRunning = useSelector((state) => state.nQueen.isRunning);
 
   const handleReset = () => {
+    if (isRunning) {
+      setStopped(true);
+      dispatch(setIsRunning(false));
+    }
     dispatch(resetSolver());
     const newBoard = initializeBoard(boardSize);
     dispatch(setBoard(newBoard));

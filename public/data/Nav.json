@@ -115,11 +115,11 @@
           "name": "Linear Regression"
         },
         {
-          "id": "knn",
+          "id": "k-nearest-neighbors",
           "name": "K-Nearest Neighbors"
         },
         {
-          "id": "k-means",
+          "id": "k-means-clustering",
           "name": "K-Means Clustering"
         }
       ]
@@ -141,7 +141,7 @@
           "name": "Perceptron"
         },
         {
-          "id": "sudoku",
+          "id": "sudoku-solver",
           "name": "Sudoku Solver"
         },
         {

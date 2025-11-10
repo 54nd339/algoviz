@@ -30,9 +30,9 @@ export default function MetricsData() {
         </div>
       </div>
     );
-  } else if (algoId === "knn") {
+  } else if (algoId === "k-nearest-neighbors") {
     return null; // No metrics for KNN
-  } else if (algoId === "k-means") {
+  } else if (algoId === "k-means-clustering") {
     return (
       <div className="flex flex-col font-space p-gap justify-between border-b-[10px] border-b-purple-bg">
         <div className="text-green uppercase">K-Means Metrics - Coming Soon</div>

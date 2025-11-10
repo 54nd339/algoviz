@@ -17,7 +17,7 @@ const MinimaxPage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const rawAlgoId = "minimax";
+    const rawAlgoId = 'minimax';
     const algoName = ToProperCase(rawAlgoId);
 
     dispatch(setIsRunning(false));

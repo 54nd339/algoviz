@@ -9,14 +9,18 @@ import { AlgoData } from "@/components/Shared";
 import { setAlgoName, setAlgoId, setAlgoCategory } from "@/redux/reducers/pageSlice";
 import { initializeBoard } from "@/components/AlgoPage/TouringKnight/TouringKnightUtils/algorithms";
 import { setBoard } from "@/redux/reducers/touringKnightSlice";
+import { ToProperCase } from "@/utils";
 
 export default function TouringKnightPage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const rawAlgoId = 'touring-knight';
+    const algoName = ToProperCase(rawAlgoId);
+
     batch(() => {
-      dispatch(setAlgoId("touring-knight"));
-      dispatch(setAlgoName("Touring Knight"));
+      dispatch(setAlgoId(rawAlgoId));
+      dispatch(setAlgoName(algoName));
       dispatch(setAlgoCategory("others"));
     });
     const initialBoard = initializeBoard(8);

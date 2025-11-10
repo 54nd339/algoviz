@@ -39,21 +39,14 @@ export default function StartButton() {
 
   return (
     <div className="relative w-full h-full lg:max-w-[250px] flex">
-      {isRunning === false ? (
-        <div
-          className="w-full h-full bg-green-bg flex justify-center items-center text-text-1 font-space uppercase border-l-[10px] border-green text-[1rem] md:text-lg hover:cursor-pointer hover:bg-green hover:text-bg-1 select-none leading-[105%]"
-          onClick={start}
-        >
-          Start
-        </div>
-      ) : (
-        <div
-          className="w-full h-full bg-red-bg flex justify-center items-center text-text-1 font-space uppercase border-l-[10px] border-red text-[1rem] md:text-lg hover:cursor-pointer hover:bg-red hover:text-bg-1 select-none leading-[105%]"
-          onClick={() => dispatch(setIsRunning(false))}
-        >
-          Stop
-        </div>
-      )}
+      <div
+        className={`w-full h-full flex justify-center items-center text-text-1 font-space uppercase border-l-[10px] text-[1rem] md:text-lg hover:cursor-pointer hover:text-bg-1 select-none leading-[105%] ${
+          isRunning ? "bg-red-bg border-red hover:bg-red hover:text-bg-1" : "bg-green-bg border-green hover:bg-green hover:text-bg-1"
+        }`}
+        onClick={isRunning ? () => dispatch(setIsRunning(false)) : start}
+      >
+        {isRunning ? "Stop" : "Start"}
+      </div>
     </div>
   );
 }

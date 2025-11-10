@@ -67,7 +67,7 @@ export default function ModelData() {
         </div>
       </div>
     );
-  } else if (algoId === "knn") {
+  } else if (algoId === "k-nearest-neighbors") {
     return (
       <div className="flex gap-[1px] font-space border-b-[10px] border-b-green-bg">
         {/* LEFT SIDE: K Value and Metrics */}
@@ -160,7 +160,7 @@ export default function ModelData() {
         </div>
       </div>
     );
-  } else if (algoId === "k-means") {
+  } else if (algoId === "k-means-clustering") {
     // Calculate cluster stats for K-means
     const clusterCounts = {};
     let totalGeneratedPoints = 0;

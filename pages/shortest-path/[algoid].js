@@ -33,7 +33,7 @@ export default function ShortestPath() {
         dispatch(setAlgoCategory("shortest-path"));
       });
     }
-  });
+  }, [router.query.algoid, dispatch]);
 
   return (
     <div>

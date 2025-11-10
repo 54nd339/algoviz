@@ -1,22 +1,36 @@
 // N-Queen solver using backtracking
-export const solveNQueens = async (n, onUpdate) => {
+export const solveNQueens = async (n, onUpdate, shouldStop, speed = 100) => {
   const solutions = [];
   const board = Array(n).fill(null).map(() => Array(n).fill(0));
   const columns = new Set();
   const diag1 = new Set(); // row - col
   const diag2 = new Set(); // row + col
+  let totalAttempts = 0;  // Track total recursive calls/placement attempts
 
   const solve = async (row) => {
+    // Check if should stop
+    if (shouldStop && shouldStop()) {
+      return;
+    }
+
     if (row === n) {
-      // Found a solution
+      // Found a solution - create a copy to store
       solutions.push(board.map(r => [...r]));
       if (onUpdate) {
-        await onUpdate(board, row, solutions.length, false);
+        await onUpdate(board.map(r => [...r]), row, totalAttempts, true);
       }
+      // Add small delay to allow UI updates between solutions
+      await new Promise((resolve) => setTimeout(resolve, 10));
       return;
     }
 
     for (let col = 0; col < n; col++) {
+      if (shouldStop && shouldStop()) {
+        return;
+      }
+
+      totalAttempts++;  // Increment for each placement attempt
+
       const d1 = row - col;
       const d2 = row + col;
 
@@ -28,7 +42,7 @@ export const solveNQueens = async (n, onUpdate) => {
         diag2.add(d2);
 
         if (onUpdate) {
-          await onUpdate(board, row + 1, solutions.length, false);
+          await onUpdate(board.map(r => [...r]), row + 1, totalAttempts, false);
         }
 
         await solve(row + 1);
@@ -39,6 +53,9 @@ export const solveNQueens = async (n, onUpdate) => {
         diag1.delete(d1);
         diag2.delete(d2);
       }
+      
+      // Add small delay to allow UI updates
+      await new Promise((resolve) => setTimeout(resolve, 5));
     }
   };
 

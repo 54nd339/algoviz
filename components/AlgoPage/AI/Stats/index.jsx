@@ -4,7 +4,7 @@ import MetricsData from "./MetricsData";
 
 const StatsContainer = () => {
   const algoId = useSelector((state) => state.page.algoId);
-  const isKNNOrKMeans = algoId === "knn" || algoId === "k-means";
+  const isKNNOrKMeans = algoId === "k-nearest-neighbors" || algoId === "k-means-clustering";
 
   return (
     <div className={`relative flex flex-row flex-wrap lg:grid ${

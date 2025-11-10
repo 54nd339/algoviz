@@ -21,23 +21,25 @@ export default function TowerOfHanoi() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const rawAlgoId = 'tower-of-hanoi';
+    const algoName = ToProperCase(rawAlgoId);
+
     dispatch(setIsRunning(false));
-    var rawAlgoId = "tower-of-hanoi";
-    var algoName = ToProperCase(rawAlgoId);
     generateDiscs();
 
     if (algoName != undefined) {
       batch(() => {
         dispatch(setAlgoId(rawAlgoId));
         dispatch(setAlgoName(algoName));
-        dispatch(setAlgoCategory("recursion"));
+        dispatch(setAlgoCategory("others"));
       });
     }
-  });
+  }, [dispatch]);
+
   return (
     <div>
-      <Seo category="recursion" id="tower-of-hanoi" />
-      <div className="px-gapm">
+      <Seo category="others" id="tower-of-hanoi" />
+      <div className="px-gap">
         <HanoiControllers />
         <VisualizerContainer />
         <StatsContainer />

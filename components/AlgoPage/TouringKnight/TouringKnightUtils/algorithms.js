@@ -18,18 +18,31 @@ const countOnwardMoves = (board, row, col, size) => {
 };
 
 // Warnsdorff's algorithm with backtracking
-export const solveKnightTour = async (size, startRow, startCol, onUpdate) => {
+export const solveKnightTour = async (size, startRow, startCol, onUpdate, shouldStop) => {
+  // Validate start position
+  if (startRow === undefined || startRow === null || startCol === undefined || startCol === null) {
+    console.error("Invalid start position", startRow, startCol);
+    return { success: false, board: null, path: [], totalAttempts: 0 };
+  }
+
   const board = Array(size).fill(null).map(() => Array(size).fill(-1));
   const path = [];
-  let moveCount = 0;
+  let totalAttempts = 0;  // Track total recursive calls/move attempts
 
   const solve = async (row, col, moveNum) => {
+    // Check if should stop
+    if (shouldStop && shouldStop()) {
+      return false;
+    }
+
+    totalAttempts++;  // Increment for each recursive call/move attempt
+
     board[row][col] = moveNum;
     path.push({ row, col, moveNum });
 
     if (moveNum === size * size - 1) {
       if (onUpdate) {
-        await onUpdate(board, path, moveNum + 1, true);
+        await onUpdate(null, path, totalAttempts, true);
       }
       return true;
     }
@@ -50,8 +63,13 @@ export const solveKnightTour = async (size, startRow, startCol, onUpdate) => {
 
     // Try each move
     for (const { newRow, newCol } of possibleMoves) {
+      if (shouldStop && shouldStop()) {
+        return false;
+      }
+
       if (onUpdate) {
-        await onUpdate(board, path, moveNum + 1, false);
+        // Pass totalAttempts to track all moves including backtracks
+        await onUpdate(null, path, totalAttempts, false);
       }
 
       if (await solve(newRow, newCol, moveNum + 1)) {
@@ -67,7 +85,7 @@ export const solveKnightTour = async (size, startRow, startCol, onUpdate) => {
   };
 
   const success = await solve(startRow, startCol, 0);
-  return { success, board, path };
+  return { success, board, path, totalAttempts };
 };
 
 // Initialize empty board
@@ -77,9 +95,10 @@ export const initializeBoard = (size) => {
 
 // Get the current path visualization
 export const getPathVisualization = (path, size) => {
-  const visualization = Array(size).fill(null).map(() => Array(size).fill(0));
+  const visualization = Array(size).fill(null).map(() => Array(size).fill(-1));
   path.forEach(({ row, col, moveNum }) => {
-    visualization[row][col] = moveNum + 1;
+    // Store moveNum directly (starting from 0)
+    visualization[row][col] = moveNum;
   });
   return visualization;
 };

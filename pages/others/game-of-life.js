@@ -9,14 +9,17 @@ import { AlgoData } from "@/components/Shared";
 import { setAlgoName, setAlgoId, setAlgoCategory } from "@/redux/reducers/pageSlice";
 import { initializeEmptyGrid } from "@/components/AlgoPage/GameOfLife/GameOfLifeUtils/algorithms";
 import { setGrid } from "@/redux/reducers/gameOfLifeSlice";
+import { ToProperCase } from "@/utils";
 
 export default function GameOfLifePage() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const rawAlgoId = 'game-of-life';
+    const algoName = ToProperCase(rawAlgoId);
     batch(() => {
-      dispatch(setAlgoId("game-of-life"));
-      dispatch(setAlgoName("Game of Life"));
+      dispatch(setAlgoId(rawAlgoId));
+      dispatch(setAlgoName(algoName));
       dispatch(setAlgoCategory("others"));
     });
     

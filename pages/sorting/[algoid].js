@@ -40,7 +40,7 @@ export default function Sorting() {
         generateNewArray();
       });
     }
-  });
+  }, [router.query.algoid, dispatch]);
 
   return (
     <div>

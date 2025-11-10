@@ -14,8 +14,8 @@ export default function AIControllers() {
     <div className="flex flex-row gap-gap py-gap w-full h-[70px] select-none overflow-x-auto">
       <GenerateButton />
       <SpeedController />
-      {algoId !== "knn" && algoId !== "k-means" && <IterationsController />}
-      {algoId === "knn" ? <GroupsController /> : algoId === "k-means" ? <ClustersController /> : <LearningRateController />}
+      {algoId !== "k-nearest-neighbors" && algoId !== "k-means-clustering" && <IterationsController />}
+      {algoId === "k-nearest-neighbors" ? <GroupsController /> : algoId === "k-means-clustering" ? <ClustersController /> : <LearningRateController />}
       <StartButton />
     </div>
   );

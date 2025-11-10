@@ -19,11 +19,11 @@ const getAlgorithmHandlers = () => {
       calculateStep: calculateLinearRegressionStep,
       generateData: generateRegressionData,
     },
-    "knn": {
+    "k-nearest-neighbors": {
       calculateStep: calculateKNNStep,
       generateData: generateKNNData,
     },
-    "k-means": {
+    "k-means-clustering": {
       calculateStep: calculateKMeansStep,
       generateData: generateKMeansData,
     },

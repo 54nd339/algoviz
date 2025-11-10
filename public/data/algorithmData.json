@@ -342,7 +342,7 @@
       "worst": "O(1)"
     }
   },
-  "Knn": {
+  "KNearestNeighbors": {
     "title": "K-Nearest Neighbors",
     "metaTitle": "K-Nearest Neighbors | Algoviz",
     "description": "K-Nearest Neighbors (KNN) is a simple, non-parametric supervised learning algorithm used for classification and regression. It classifies a data point based on the majority class of its k nearest neighbors, making predictions by finding the most common label among the k closest training examples.",
@@ -358,7 +358,7 @@
       "worst": "O(n*d)"
     }
   },
-  "KMeans": {
+  "KMeansClustering": {
     "title": "K-Means Clustering",
     "metaTitle": "K-Means Clustering | Algoviz",
     "description": "K-Means is an unsupervised learning algorithm that partitions data into k clusters by iteratively assigning points to the nearest centroid and updating centroids based on the mean of assigned points. It minimizes intra-cluster variance and is widely used for exploratory data analysis.",
@@ -390,7 +390,7 @@
       "worst": "O(m*l)"
     }
   },
-  "Sudoku": {
+  "SudokuSolver": {
     "title": "Sudoku Solver",
     "metaTitle": "Sudoku Solver | Algoviz",
     "description": "The Sudoku Solver uses backtracking to solve 9x9 Sudoku puzzles. It tries to fill each empty cell with numbers 1-9, checking if the placement is valid according to Sudoku rules (no duplicates in row, column, or 3x3 box). When it encounters an invalid state, it backtracks and tries a different number.",

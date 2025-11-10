@@ -1,14 +1,22 @@
 import { useDispatch, useSelector } from "react-redux";
-import { resetTour } from "@/redux/reducers/touringKnightSlice";
+import { resetTour, setIsRunning } from "@/redux/reducers/touringKnightSlice";
 
 import { initializeBoard } from "../TouringKnightUtils/algorithms";
 import { setBoard } from "@/redux/reducers/touringKnightSlice";
+import { setStopped } from "./stopFlag";
 
 const ResetButton = () => {
   const dispatch = useDispatch();
   const boardSize = useSelector((state) => state.touringKnight.boardSize);
+  const isRunning = useSelector((state) => state.touringKnight.isRunning);
 
   const handleReset = () => {
+    // Stop the algorithm if running
+    if (isRunning) {
+      setStopped(true);
+      dispatch(setIsRunning(false));
+    }
+    
     dispatch(resetTour());
     const newBoard = initializeBoard(boardSize);
     dispatch(setBoard(newBoard));

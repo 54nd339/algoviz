@@ -40,7 +40,7 @@ export default function Searching() {
         generateNewArray();
       });
     }
-  });
+  }, [router.query.algoid, dispatch]);
 
   return (
     <div>

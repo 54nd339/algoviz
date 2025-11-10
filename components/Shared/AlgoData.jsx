@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import PrismTheme from "@/utils/PrismTheme";
 import Data from "@/public/data/algorithmData.json";
+import { kebabToPascalCase } from "@/utils";
 
 /**
  * Generic AlgoData component that works across all algorithm pages
@@ -9,13 +10,17 @@ import Data from "@/public/data/algorithmData.json";
  */
 const AlgoData = ({ gridLayout = "lg:grid-cols-algoDataLayout" }) => {
   const algoName = useSelector((state) => state.page.algoName);
+  const algoId = useSelector((state) => state.page.algoId);
 
-  if (!algoName) return null;
+  if (!algoId) return null;
 
-  let currAlgo = algoName.replace(/ /g, "").replace(/'/g, "").replace(/-/g, "");
+  const currAlgo = kebabToPascalCase(algoId);
   const currAlgoData = Data[currAlgo];
 
   if (!currAlgoData) return null;
+
+  // Use algoName for display, fallback to currAlgo if not available
+  const displayName = algoName || currAlgo;
 
   const ComplexityRow = ({ label, value, color }) => (
     <span className="flex justify-between">
@@ -37,7 +42,7 @@ const AlgoData = ({ gridLayout = "lg:grid-cols-algoDataLayout" }) => {
   return (
     <>
       <div className="w-full h-[150px] bg-green-bg mt-gap font-space text-[1.5rem] lg:text-[2rem] text-text-1 flex items-center uppercase justify-center text-center p-[10px]">
-        More About {algoName}
+        More About {displayName}
       </div>
       <div className={`flex flex-col lg:grid ${gridLayout} gap-gap my-gap`}>
         <div

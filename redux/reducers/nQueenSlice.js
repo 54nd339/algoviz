@@ -9,6 +9,7 @@ const initialState = {
   currentSolution: 0,
   placedQueens: 0,
   totalSolutions: 0,
+  totalAttempts: 0,
   isComplete: false,
   message: "Press Solve to find all solutions",
 };
@@ -32,6 +33,7 @@ const nQueenSlice = createSlice({
       state.currentSolution = 0;
       state.placedQueens = 0;
       state.totalSolutions = 0;
+      state.totalAttempts = 0;
       state.isComplete = false;
       state.message = "Press Solve to find all solutions";
     },
@@ -46,6 +48,9 @@ const nQueenSlice = createSlice({
     },
     setTotalSolutions: (state, action) => {
       state.totalSolutions = action.payload;
+    },
+    setTotalAttempts: (state, action) => {
+      state.totalAttempts = action.payload;
     },
     setIsComplete: (state, action) => {
       state.isComplete = action.payload;
@@ -63,6 +68,7 @@ const nQueenSlice = createSlice({
       state.currentSolution = 0;
       state.placedQueens = 0;
       state.totalSolutions = 0;
+      state.totalAttempts = 0;
       state.isComplete = false;
       state.message = "Press Solve to find all solutions";
     },
@@ -78,6 +84,7 @@ export const {
   setCurrentSolution,
   setPlacedQueens,
   setTotalSolutions,
+  setTotalAttempts,
   setIsComplete,
   setMessage,
   resetSolver,

@@ -32,7 +32,7 @@ export default function Sorting() {
       });
     }
     generateGrid();
-  });
+  }, [router.query.algoid, dispatch]);
 
   return (
     <div>

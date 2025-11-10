@@ -14,7 +14,7 @@ const StartButton = () => {
     dispatch(resetStats());
     
     // Initialize centroids for K-means if needed
-    if (algoId === "k-means") {
+    if (algoId === "k-means-clustering") {
       const centroids = initializeKMeansCentroids();
       dispatch(setCentroids(centroids));
     }

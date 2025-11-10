@@ -10,16 +10,20 @@ import { AlgoData } from "@/components/Shared";
 import { setBoard, setOriginalBoard } from "@/redux/reducers/sudokuSlice";
 import { setAlgoName, setAlgoId, setAlgoCategory } from "@/redux/reducers/pageSlice";
 import { generateSudokuPuzzle } from "@/components/AlgoPage/SudokuSolver/SudokuUtils/algorithms";
+import { ToProperCase } from "@/utils";
 
 export default function SudokuPage() {
   const dispatch = useDispatch();
   const boardSize = useSelector((state) => state.sudoku.boardSize);
 
   useEffect(() => {
+    const rawAlgoId = 'sudoku-solver';
+    const algoName = ToProperCase(rawAlgoId);
+
     // Initialize with a puzzle on page load (async)
     batch(() => {
-      dispatch(setAlgoId("sudoku"));
-      dispatch(setAlgoName("Sudoku Solver"));
+      dispatch(setAlgoId(rawAlgoId));
+      dispatch(setAlgoName(algoName));
       dispatch(setAlgoCategory("others"));
     });
 
@@ -34,7 +38,7 @@ export default function SudokuPage() {
 
   return (
     <div>
-      <Seo category="others" id="sudoku-solver" />
+      <Seo category="others" id="sudoku" />
       <div className="px-gap">
         <SudokuControllers />
         <VisualizerContainer />

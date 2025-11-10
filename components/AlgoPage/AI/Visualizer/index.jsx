@@ -17,7 +17,7 @@ export default function VisualizerContainer() {
   // Handle mouse clicks to add points (for KNN, K-means and Linear Regression)
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || (algoId !== "knn" && algoId !== "k-means" && algoId !== "linear-regression")) return;
+    if (!canvas || (algoId !== "k-nearest-neighbors" && algoId !== "k-means-clustering" && algoId !== "linear-regression")) return;
 
     const handleCanvasClick = (e) => {
       const rect = canvas.getBoundingClientRect();
@@ -54,9 +54,9 @@ export default function VisualizerContainer() {
     // Render based on algorithm type
     if (algoId === "linear-regression") {
       renderLinearRegressionVisualization(canvas, ctx, dataPoints, slope, intercept);
-    } else if (algoId === "knn") {
+    } else if (algoId === "k-nearest-neighbors") {
       renderKNNVisualization(canvas, ctx, dataPoints);
-    } else if (algoId === "k-means") {
+    } else if (algoId === "k-means-clustering") {
       renderKMeansVisualization(canvas, ctx, dataPoints, centroids);
     }
 
