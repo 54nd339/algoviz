@@ -11,7 +11,7 @@ import {
   setAlgoCategory,
 } from "@/redux/reducers/pageSlice";
 import { useDispatch } from "react-redux";
-import AlgoData from "@/components/AlgoPage/AI/AlgoData";
+import { AlgoData } from "@/components/Shared";
 import StatsContainer from "@/components/AlgoPage/AI/Stats";
 import { setRunning, resetStats, setDataPoints } from "@/redux/reducers/aiSlice";
 import VisualizerContainer from "@/components/AlgoPage/AI/Visualizer";

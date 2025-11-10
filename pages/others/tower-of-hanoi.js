@@ -6,7 +6,7 @@ import Seo from "@/components/Seo";
 import { ToProperCase } from "@/utils";
 import Footer from "@/components/Footer";
 import { setIsRunning } from "@/redux/reducers/hanoiSlice";
-import AlgoData from "@/components/AlgoPage/TowerOfHanoi/AlgoData";
+import { AlgoData } from "@/components/Shared";
 import {
   setAlgoId,
   setAlgoName,

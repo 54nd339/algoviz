@@ -11,7 +11,7 @@ import generateTree from "@/components/AlgoPage/Minimax/MinimaxUtils/generateTre
 import MinimaxControllers from "@/components/AlgoPage/Minimax/Controllers";
 import VisualizerContainer from "@/components/AlgoPage/Minimax/Visualizer";
 import StatsContainer from "@/components/AlgoPage/Minimax/Stats";
-import AlgoData from "@/components/AlgoPage/Minimax/AlgoData";
+import { AlgoData } from "@/components/Shared";
 
 const MinimaxPage = () => {
   const dispatch = useDispatch();

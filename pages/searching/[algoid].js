@@ -18,7 +18,7 @@ import SearchingControllers from "@/components/AlgoPage/Searching/Controllers";
 import VisualizerEdgeLeftIcon from "@/public/assets/visualizer-edge-left-icon.svg";
 import VisualizerEdgeRightIcon from "@/public/assets/visualizer-edge-right-icon.svg";
 import { generateNewArray } from "@/components/AlgoPage/Searching/SearchingUtils/generateArray";
-import AlgoData from "@/components/AlgoPage/Searching/AlgoData";
+import { AlgoData } from "@/components/Shared";
 
 export default function Searching() {
   const router = useRouter();

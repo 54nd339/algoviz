@@ -14,7 +14,7 @@ import {
 import PerceptronControllers from "@/components/AlgoPage/Perceptron/Controllers";
 import VisualizerContainer from "@/components/AlgoPage/Perceptron/Visualizer";
 import StatsContainer from "@/components/AlgoPage/Perceptron/Stats";
-import AlgoData from "@/components/AlgoPage/Perceptron/AlgoData";
+import { AlgoData } from "@/components/Shared";
 import { initializeNetwork } from "@/components/AlgoPage/Perceptron/PerceptronUtils/algorithms";
 
 // Forward pass function for initial visualization

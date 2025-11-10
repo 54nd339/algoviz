@@ -14,7 +14,7 @@ import {
 import GraphTraversalControllers from "@/components/AlgoPage/MinSpanTree/Controllers";
 import VisualizerContainer from "@/components/AlgoPage/MinSpanTree/Visualizer";
 import StatsContainer from "@/components/AlgoPage/MinSpanTree/Stats";
-import AlgoData from "@/components/AlgoPage/MinSpanTree/AlgoData";
+import { AlgoData } from "@/components/Shared";
 import VisualizerEdgeLeftIcon from "@/public/assets/visualizer-edge-left-icon.svg";
 import VisualizerEdgeRightIcon from "@/public/assets/visualizer-edge-right-icon.svg";
 

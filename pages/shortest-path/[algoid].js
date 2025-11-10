@@ -14,7 +14,7 @@ import {
 import ShortestPathControllers from "@/components/AlgoPage/ShortestPath/Controllers";
 import VisualizerContainer from "@/components/AlgoPage/ShortestPath/Visualizer";
 import StatsContainer from "@/components/AlgoPage/ShortestPath/Stats";
-import AlgoData from "@/components/AlgoPage/ShortestPath/AlgoData";
+import { AlgoData } from "@/components/Shared";
 import VisualizerEdgeLeftIcon from "@/public/assets/visualizer-edge-left-icon.svg";
 import VisualizerEdgeRightIcon from "@/public/assets/visualizer-edge-right-icon.svg";
 

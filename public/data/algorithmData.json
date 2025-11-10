@@ -342,7 +342,7 @@
       "worst": "O(1)"
     }
   },
-  "KNN": {
+  "Knn": {
     "title": "K-Nearest Neighbors",
     "metaTitle": "K-Nearest Neighbors | Algoviz",
     "description": "K-Nearest Neighbors (KNN) is a simple, non-parametric supervised learning algorithm used for classification and regression. It classifies a data point based on the majority class of its k nearest neighbors, making predictions by finding the most common label among the k closest training examples.",
@@ -378,7 +378,7 @@
     "title": "Perceptron",
     "metaTitle": "Perceptron Neural Network | Algoviz",
     "description": "The Perceptron is a fundamental artificial neural network algorithm that learns to classify data by adjusting weights through backpropagation. It uses activation functions (ReLU for hidden layers, sigmoid for output) and can learn non-linear patterns when stacked into multiple layers.",
-    "code": "class Perceptron:\n    def __init__(self, layers, learningRate=0.1):\n        self.layers = layers\n        self.lr = learningRate\n        \n    def forward(self, inputs):\n        self.activations = [inputs]\n        for layer in self.layers:\n            z = layer.weights @ inputs + layer.biases\n            a = sigmoid(z) if layer == self.layers[-1] else relu(z)\n            self.activations.append(a)\n            inputs = a\n        return a\n    \n    def backward(self, target):\n        deltas = []\n        output = self.activations[-1]\n        delta = (output - target) * sigmoid_derivative(output)\n        deltas.append(delta)\n        \n        for i in range(len(self.layers)-2, -1, -1):\n            delta = self.layers[i+1].weights.T @ deltas[-1]\n            delta *= relu_derivative(self.activations[i+1])\n            deltas.append(delta)\n        \n        for i, layer in enumerate(self.layers):\n            gradient = deltas[-(i+1)] @ self.activations[i].T\n            layer.weights -= self.lr * gradient\n            layer.biases -= self.lr * deltas[-(i+1)]",
+    "code": "struct Layer {\n\tvector<vector<double>> weights;\n\tvector<double> biases;\n\tvector<double> z, activations;\n};\n\nclass Perceptron {\npublic:\n\tvector<Layer> layers;\n\tdouble learningRate;\n\t\n\tPerceptron(vector<int>& layerSizes, double lr = 0.1) : learningRate(lr) {\n\t\tfor (int i = 0; i < layerSizes.size() - 1; i++) {\n\t\t\tLayer layer;\n\t\t\tlayer.weights.resize(layerSizes[i+1], vector<double>(layerSizes[i]));\n\t\t\tlayer.biases.resize(layerSizes[i+1], 0.0);\n\t\t\tfor (auto& row : layer.weights)\n\t\t\t\tfor (auto& w : row) w = (double)rand()/RAND_MAX - 0.5;\n\t\t\tlayers.push_back(layer);\n\t\t}\n\t}\n\t\n\tdouble sigmoid(double x) {\n\t\treturn 1.0 / (1.0 + exp(-x));\n\t}\n\t\n\tdouble relu(double x) {\n\t\treturn max(0.0, x);\n\t}\n\t\n\tvector<double> forward(vector<double>& input) {\n\t\tvector<double> activation = input;\n\t\tfor (auto& layer : layers) {\n\t\t\tlayer.activations = activation;\n\t\t\tvector<double> newActivation(layer.weights.size());\n\t\t\tfor (int i = 0; i < layer.weights.size(); i++) {\n\t\t\t\tdouble z = layer.biases[i];\n\t\t\t\tfor (int j = 0; j < layer.weights[i].size(); j++)\n\t\t\t\t\tz += layer.weights[i][j] * activation[j];\n\t\t\t\tlayer.z.push_back(z);\n\t\t\t\tnewActivation[i] = sigmoid(z);\n\t\t\t}\n\t\t\tactivation = newActivation;\n\t\t}\n\t\treturn activation;\n\t}\n};",
     "timeComplexity": {
       "best": "O(n*m*l*e)",
       "average": "O(n*m*l*e)",
@@ -390,11 +390,11 @@
       "worst": "O(m*l)"
     }
   },
-  "SudokuSolver": {
+  "Sudoku": {
     "title": "Sudoku Solver",
     "metaTitle": "Sudoku Solver | Algoviz",
     "description": "The Sudoku Solver uses backtracking to solve 9x9 Sudoku puzzles. It tries to fill each empty cell with numbers 1-9, checking if the placement is valid according to Sudoku rules (no duplicates in row, column, or 3x3 box). When it encounters an invalid state, it backtracks and tries a different number.",
-    "code": "def is_valid(board, row, col, num):\n    # Check row\n    for j in range(9):\n        if board[row][j] == num:\n            return False\n    \n    # Check column\n    for i in range(9):\n        if board[i][col] == num:\n            return False\n    \n    # Check 3x3 box\n    box_row, box_col = 3 * (row // 3), 3 * (col // 3)\n    for i in range(box_row, box_row + 3):\n        for j in range(box_col, box_col + 3):\n            if board[i][j] == num:\n                return False\n    return True\n\ndef solve(board):\n    for i in range(9):\n        for j in range(9):\n            if board[i][j] == 0:\n                for num in range(1, 10):\n                    if is_valid(board, i, j, num):\n                        board[i][j] = num\n                        if solve(board):\n                            return True\n                        board[i][j] = 0  # Backtrack\n                return False\n    return True",
+    "code": "bool isValid(int board[9][9], int row, int col, int num) {\n\t// Check row\n\tfor (int j = 0; j < 9; j++)\n\t\tif (board[row][j] == num) return false;\n\t\n\t// Check column\n\tfor (int i = 0; i < 9; i++)\n\t\tif (board[i][col] == num) return false;\n\t\n\t// Check 3x3 box\n\tint boxRow = 3 * (row / 3), boxCol = 3 * (col / 3);\n\tfor (int i = boxRow; i < boxRow + 3; i++)\n\t\tfor (int j = boxCol; j < boxCol + 3; j++)\n\t\t\tif (board[i][j] == num) return false;\n\t\n\treturn true;\n}\n\nbool solve(int board[9][9]) {\n\tfor (int i = 0; i < 9; i++) {\n\t\tfor (int j = 0; j < 9; j++) {\n\t\t\tif (board[i][j] == 0) {\n\t\t\t\tfor (int num = 1; num <= 9; num++) {\n\t\t\t\t\tif (isValid(board, i, j, num)) {\n\t\t\t\t\t\tboard[i][j] = num;\n\t\t\t\t\t\tif (solve(board)) return true;\n\t\t\t\t\t\tboard[i][j] = 0;  // Backtrack\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\treturn false;\n\t\t\t}\n\t\t}\n\t}\n\treturn true;\n}",
     "timeComplexity": {
       "best": "O(1)",
       "average": "O(9^(n*m))",

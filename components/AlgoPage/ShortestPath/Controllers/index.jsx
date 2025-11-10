@@ -1,7 +1,7 @@
 import React from "react";
 import GenerateButton from "./GenerateButton";
-import SpeedController from "@/components/AlgoPage/MinSpanTree/Controllers/SpeedController";
-import CountController from "@/components/AlgoPage/MinSpanTree/Controllers/CountController";
+import SpeedController from "./SpeedController";
+import CountController from "./CountController";
 import SourceNodeSelector from "./SourceNodeSelector";
 import StartButton from "./StartButton";
 

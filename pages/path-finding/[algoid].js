@@ -11,7 +11,7 @@ import {
   setAlgoName,
   setAlgoCategory,
 } from "@/redux/reducers/pageSlice";
-import AlgoData from "@/components/AlgoPage/PathFinding/AlgoData";
+import { AlgoData } from "@/components/Shared";
 import StatsContainer from "@/components/AlgoPage/PathFinding/Stats";
 import VisualizerContainer from "@/components/AlgoPage/PathFinding/Visualizer";
 import generateGrid from "@/components/AlgoPage/PathFinding/MazeUtils/generateGrid";
