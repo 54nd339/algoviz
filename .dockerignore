@@ -1,0 +1,22 @@
+# Git
+.git
+.github
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Local dependencies
+node_modules
+
+# Next.js build output
+.next
+
+# Environment files
+.env
+.env.local
+config.env
+
+# Readme
+README.md
