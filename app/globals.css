@@ -1,26 +1,324 @@
 @import "tailwindcss";
 
+/* ── Base Console Theme ─────────────────────────────────────────────── */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary: #09090b;
+  --bg-surface: #18181b;
+  --bg-elevated: #27272a;
+  --border: #27272a;
+  --border-subtle: #1e1e21;
+
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+
+  --accent-green: #22c55e;
+  --accent-cyan: #06b6d4;
+  --accent-amber: #f59e0b;
+  --accent-red: #ef4444;
+
+  --glow-green: 0 0 12px oklch(from #22c55e l c h / 20%);
+  --glow-cyan: 0 0 12px oklch(from #06b6d4 l c h / 20%);
+  --glow-amber: 0 0 12px oklch(from #f59e0b l c h / 20%);
 }
 
+/* Light mode (next-themes class="light") */
+html.light {
+  color-scheme: light;
+  --bg-primary: #fafafa;
+  --bg-surface: #f4f4f5;
+  --bg-elevated: #e4e4e7;
+  --border: #e4e4e7;
+  --border-subtle: #d4d4d8;
+
+  --text-primary: #18181b;
+  --text-secondary: #52525b;
+  --text-muted: #71717a;
+
+  --accent-green: #16a34a;
+  --accent-cyan: #0891b2;
+  --accent-amber: #d97706;
+  --accent-red: #dc2626;
+
+  --glow-green: 0 0 12px oklch(from #16a34a l c h / 15%);
+  --glow-cyan: 0 0 12px oklch(from #0891b2 l c h / 15%);
+  --glow-amber: 0 0 12px oklch(from #d97706 l c h / 15%);
+}
+
+/* ── Tailwind v4 Theme Tokens ───────────────────────────────────────── */
+
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg-primary: var(--bg-primary);
+  --color-bg-surface: var(--bg-surface);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
+  --color-accent-green: var(--accent-green);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-accent-amber: var(--accent-amber);
+  --color-accent-red: var(--accent-red);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ── Base Styles ────────────────────────────────────────────────────── */
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── Utility Classes ────────────────────────────────────────────────── */
+
+.bg-dot-grid {
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.glow-green {
+  box-shadow: var(--glow-green);
+}
+
+.glow-cyan {
+  box-shadow: var(--glow-cyan);
+}
+
+/* ── Theme Variants ─────────────────────────────────────────────────── */
+
+.theme-matrix {
+  --accent-green: #00ff41;
+  --accent-cyan: #00ff41;
+  --accent-amber: #00cc33;
+  --bg-primary: #000000;
+  --bg-surface: #0a0f0a;
+  --bg-elevated: #0d1a0d;
+  --border: #0d1a0d;
+  --text-primary: #00ff41;
+  --text-secondary: #00cc33;
+  --text-muted: #006600;
+  --glow-green: 0 0 12px oklch(from #00ff41 l c h / 25%);
+}
+
+.theme-crt {
+  --accent-green: #ffb000;
+  --accent-cyan: #ffb000;
+  --accent-amber: #ff8c00;
+  --bg-primary: #0a0600;
+  --bg-surface: #1a1000;
+  --bg-elevated: #2a1a00;
+  --border: #2a1a00;
+  --text-primary: #ffb000;
+  --text-secondary: #cc8c00;
+  --text-muted: #806000;
+  --glow-amber: 0 0 12px oklch(from #ffb000 l c h / 25%);
+}
+
+.theme-cyberpunk {
+  --accent-green: #06b6d4;
+  --accent-cyan: #d946ef;
+  --accent-amber: #06b6d4;
+  --bg-primary: #0a0010;
+  --bg-surface: #150020;
+  --bg-elevated: #200030;
+  --border: #200030;
+  --text-primary: #e0e0ff;
+  --text-secondary: #a0a0cc;
+  --text-muted: #606080;
+  --glow-cyan: 0 0 12px oklch(from #d946ef l c h / 25%);
+}
+
+.theme-paper {
+  --accent-green: #22c55e;
+  --accent-cyan: #0ea5e9;
+  --accent-amber: #f59e0b;
+  --accent-red: #ef4444;
+  --bg-primary: #1c1917;
+  --bg-surface: #292524;
+  --bg-elevated: #44403c;
+  --border: #44403c;
+  --border-subtle: #57534e;
+  --text-primary: #fafaf9;
+  --text-secondary: #a8a29e;
+  --text-muted: #78716c;
+  --glow-green: 0 0 12px oklch(from #22c55e l c h / 18%);
+  --glow-cyan: 0 0 12px oklch(from #0ea5e9 l c h / 18%);
+  --glow-amber: 0 0 12px oklch(from #f59e0b l c h / 18%);
+}
+
+/* ── Light variants (when html.light + theme class) ──────────────────── */
+
+html.light.theme-matrix {
+  --accent-green: #00c735;
+  --accent-cyan: #00c735;
+  --accent-amber: #009928;
+  --bg-primary: #e8f5e9;
+  --bg-surface: #f1f8e9;
+  --bg-elevated: #c8e6c9;
+  --border: #a5d6a7;
+  --border-subtle: #c8e6c9;
+  --text-primary: #1b5e20;
+  --text-secondary: #2e7d32;
+  --text-muted: #388e3c;
+  --glow-green: 0 0 12px oklch(from #00c735 l c h / 15%);
+}
+
+html.light.theme-crt {
+  --accent-green: #e65100;
+  --accent-cyan: #e65100;
+  --accent-amber: #ff6f00;
+  --bg-primary: #fff8e1;
+  --bg-surface: #ffecb3;
+  --bg-elevated: #ffe082;
+  --border: #ffca28;
+  --border-subtle: #ffe082;
+  --text-primary: #4a3600;
+  --text-secondary: #6d4c00;
+  --text-muted: #8d6e00;
+  --glow-amber: 0 0 12px oklch(from #ff6f00 l c h / 18%);
+}
+
+html.light.theme-cyberpunk {
+  --accent-green: #0891b2;
+  --accent-cyan: #c026d3;
+  --accent-amber: #0891b2;
+  --bg-primary: #f5f3ff;
+  --bg-surface: #ede9fe;
+  --bg-elevated: #ddd6fe;
+  --border: #c4b5fd;
+  --border-subtle: #ddd6fe;
+  --text-primary: #2e1065;
+  --text-secondary: #4c1d95;
+  --text-muted: #5b21b6;
+  --glow-cyan: 0 0 12px oklch(from #c026d3 l c h / 18%);
+}
+
+html.light.theme-paper {
+  --accent-green: #16a34a;
+  --accent-cyan: #0284c7;
+  --accent-amber: #d97706;
+  --accent-red: #dc2626;
+  --bg-primary: #fafaf9;
+  --bg-surface: #f5f5f4;
+  --bg-elevated: #e7e5e4;
+  --border: #d6d3d1;
+  --border-subtle: #e7e5e4;
+  --text-primary: #1c1917;
+  --text-secondary: #57534e;
+  --text-muted: #a8a29e;
+  --glow-green: none;
+  --glow-cyan: none;
+  --glow-amber: none;
+}
+
+/* ── Scrollbar ──────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ── Card Stagger Animation ────────────────────────────────────────── */
+
+@keyframes card-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+#categories > a {
+  opacity: 0;
+  animation: card-fade-in 0.4s ease-out forwards;
+}
+
+#categories > a:nth-child(1)  { animation-delay: 0.30s; }
+#categories > a:nth-child(2)  { animation-delay: 0.35s; }
+#categories > a:nth-child(3)  { animation-delay: 0.40s; }
+#categories > a:nth-child(4)  { animation-delay: 0.45s; }
+#categories > a:nth-child(5)  { animation-delay: 0.50s; }
+#categories > a:nth-child(6)  { animation-delay: 0.55s; }
+#categories > a:nth-child(7)  { animation-delay: 0.60s; }
+#categories > a:nth-child(8)  { animation-delay: 0.65s; }
+#categories > a:nth-child(9)  { animation-delay: 0.70s; }
+#categories > a:nth-child(10) { animation-delay: 0.75s; }
+#categories > a:nth-child(11) { animation-delay: 0.80s; }
+#categories > a:nth-child(12) { animation-delay: 0.85s; }
+#categories > a:nth-child(13) { animation-delay: 0.90s; }
+#categories > a:nth-child(14) { animation-delay: 0.95s; }
+#categories > a:nth-child(15) { animation-delay: 1.00s; }
+
+/* ── Print Styles ──────────────────────────────────────────────────── */
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  aside,
+  header,
+  footer,
+  [data-tour],
+  [role="dialog"],
+  .no-print {
+    display: none !important;
+  }
+
+  main {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .print-header {
+    display: block !important;
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+
+  canvas {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+}
+
+.print-header {
+  display: none;
+}
+
+/* ── Reduced Motion ─────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
