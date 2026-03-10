@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="77" fill="#09090b"/>
+  <text x="50%" y="54%" dominant-baseline="central" text-anchor="middle"
+        font-family="monospace" font-weight="bold" font-size="143"
+        fill="#22c55e" letter-spacing="5">AV</text>
+  <rect x="61" y="449" width="390" height="2" fill="#22c55e" opacity="0.5"/>
+</svg>
